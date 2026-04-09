@@ -477,7 +477,7 @@ img, svg { display: block; max-width: 100%; }
   margin: 0;
 }
 @media (max-width: 600px) {
-  .hero-cta-row { flex-direction: column; align-items: stretch; }
+  .hero-cta-row { flex-direction: column; align-items: stretch; align-self: stretch; width: 100%; }
   .btn-hero { width: 100%; }
 }
 .divider {
@@ -1964,6 +1964,54 @@ img, svg { display: block; max-width: 100%; }
   .slide figcaption strong { font-size: 18px; }
 }
 
+/* ============ NARROW MOBILE (iPhone SE / small Androids) ============ */
+@media (max-width: 420px) {
+  .nav-inner { padding: 14px 16px; gap: 10px; }
+  .nav-actions .btn-dark { padding: 8px 13px; font-size: 12.5px; }
+  .brand-name { font-size: 15px; }
+  .nav .brand-name { font-size: 20px; }
+
+  .launch-banner-inner { padding: 11px 16px; gap: 8px; font-size: 12.5px; }
+  .launch-banner-cta { padding: 5px 11px; font-size: 12px; }
+
+  .hero, .meet, .who, .modules, .pricing, .faq { padding-left: 16px; padding-right: 16px; }
+  .display { font-size: 34px; line-height: 1.06; }
+  .hero-lede { font-size: 15px; }
+  .hero-cta-row { gap: 10px; }
+  .hero-cta-row .btn { width: 100%; padding: 14px 18px; font-size: 14px; }
+
+  .section-title { font-size: 26px; }
+  .mission, .about, .course-preview, .stats { padding-left: 16px; padding-right: 16px; }
+  .mission { padding-top: 40px; }
+  .mission-headline { font-size: 22px; }
+  .about-inner { padding: 32px 18px; }
+  .about-headline { font-size: 23px; }
+
+  /* Stats — collapse 3/4-up to single column to avoid lonely widow cards */
+  .stats-inner,
+  .stats-three { grid-template-columns: 1fr; padding: 22px 16px; gap: 10px; }
+  .stats-inner .stat,
+  .stats-three .stat {
+    border-right: none;
+    border-bottom: 1px solid var(--line);
+    padding: 14px 6px;
+  }
+  .stats-inner .stat:last-child,
+  .stats-three .stat:last-child { border-bottom: none; }
+  .stat-num { font-size: 32px; }
+
+  /* Pricing plan card breathing room */
+  .plan { padding: 26px 20px; }
+  .plan-price { font-size: 44px; }
+
+  /* FAQ tighter */
+  .faq-item summary { font-size: 15px; padding: 18px 14px; }
+  .faq-item .faq-a { padding: 0 14px 18px; }
+
+  /* Footer tight */
+  .footer { padding: 48px 18px; }
+}
+
 /* ============ HERO IDEA CHOOSER ============ */
 .hero-chooser {
   display: flex;
@@ -2519,4 +2567,21 @@ img, svg { display: block; max-width: 100%; }
   .idea-unlock-title { font-size: 22px; }
   .idea-unlock-form { flex-direction: column; }
   .idea-unlock-form .btn { width: 100%; }
+}
+
+@media (max-width: 420px) {
+  .idea-hero { padding: 28px 16px 14px; }
+  .idea-hero .display { font-size: 30px; }
+  .idea-results { padding: 14px 16px 48px; }
+  .idea-form { padding: 14px; }
+  .idea-card { padding: 22px 18px; }
+  .idea-card-name { font-size: 20px; }
+  .idea-card-tagline { font-size: 14px; }
+  .idea-card-section-label { font-size: 10.5px; }
+  .idea-card-section-body { font-size: 14px; }
+  .idea-cta-card { padding: 22px 16px; }
+  .idea-cta-title { font-size: 20px; }
+  .idea-unlock-card { padding: 22px 16px; }
+  .idea-unlock-title { font-size: 20px; }
+  .idea-unlock-sub { font-size: 14px; }
 }
