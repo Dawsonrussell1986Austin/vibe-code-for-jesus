@@ -27,6 +27,8 @@
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+section[id] { scroll-margin-top: 92px; }
 body {
   background: var(--bg);
   color: var(--ink);
@@ -1089,6 +1091,11 @@ img, svg { display: block; max-width: 100%; }
   letter-spacing: 0.06em;
   padding: 5px 12px;
   border-radius: 999px;
+  white-space: nowrap;
+}
+.plan-badge-vip {
+  background: var(--ink);
+  color: var(--accent-soft);
 }
 .plan-icon {
   font-size: 22px;
