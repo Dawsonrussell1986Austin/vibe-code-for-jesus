@@ -111,13 +111,17 @@ img, svg { display: block; max-width: 100%; }
   color: var(--ink);
   white-space: nowrap;
 }
-/* Larger, italic wordmark for the top nav */
+/* Larger wordmark for the top nav (fully non-italic) */
 .nav .brand-mark { width: 34px; height: 34px; }
 .nav .brand-name {
   font-size: 30px;
-  font-style: italic;
+  font-style: normal;
   letter-spacing: -0.02em;
   font-weight: 500;
+}
+/* "was" and "good" pop in the brand accent color */
+.brand-name .brand-accent {
+  color: var(--accent);
 }
 .nav-links {
   display: flex;
