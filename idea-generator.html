@@ -7,7 +7,7 @@
 <title>Find your idea · The Genesis Challenge</title>
 <meta name="description" content="No idea yet? Tell us a problem you run into and we'll generate three real things you could build and launch after taking The Genesis Challenge — plus how to market each one." />
 <meta name="theme-color" content="#F0EEE6" />
-<link rel="canonical" href="https://itwasverygood.com/idea-generator.html" />
+<link rel="canonical" href="https://itwasverygood.com/idea-generator" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" href="/favicon.svg" />
 
@@ -21,7 +21,7 @@
 <!-- ============ NAV ============ -->
 <header class="nav">
   <div class="nav-inner">
-    <a href="index.html" class="brand" aria-label="it was very good.">
+    <a href="/" class="brand" aria-label="it was very good.">
       <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
         <g fill="#C8633A">
           <circle cx="16" cy="16" r="6"/>
@@ -41,11 +41,11 @@
       <a href="index.html#instructors">Instructors <span class="caret">›</span></a>
       <a href="index.html#about">About <span class="caret">›</span></a>
       <a href="index.html#pricing">Pricing <span class="caret">›</span></a>
-      <a href="blog.html">Blog <span class="caret">›</span></a>
+      <a href="/blog">Blog <span class="caret">›</span></a>
     </nav>
     <div class="nav-actions">
-      <a class="btn btn-ghost" href="login.html">Sign in</a>
-      <a class="btn btn-dark" href="login.html">Join the waitlist</a>
+      <a class="btn btn-ghost" href="/login">Sign in</a>
+      <a class="btn btn-dark" href="/login">Join the waitlist</a>
     </div>
   </div>
 </header>
@@ -54,30 +54,25 @@
 <div class="launch-banner" role="status">
   <div class="launch-banner-inner">
     <span class="launch-banner-icon" aria-hidden="true">
-      <svg viewBox="0 0 32 32" width="18" height="18">
-        <g fill="currentColor">
-          <circle cx="16" cy="16" r="6"/>
-          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3"/>
-          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(60 16 16)"/>
-          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(120 16 16)"/>
-          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(180 16 16)"/>
-          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(240 16 16)"/>
-          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(300 16 16)"/>
-        </g>
+      <svg viewBox="0 0 32 32" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 28h24"/>
+        <path d="M22 28V6H10v22"/>
+        <path d="M10 28V9l7-3v22z" fill="currentColor" fill-opacity="0.22" stroke="currentColor"/>
+        <circle cx="14" cy="17" r="0.9" fill="currentColor" stroke="none"/>
       </svg>
     </span>
     <span class="launch-banner-text">
       <strong>Doors open Tuesday, April&nbsp;14.</strong> The next round of The Genesis Challenge starts in <span class="launch-banner-countdown">5 days</span>.
     </span>
-    <a href="login.html" class="launch-banner-cta">Join the waitlist →</a>
+    <a href="/login" class="launch-banner-cta">Join the waitlist →</a>
   </div>
 </div>
 
 <!-- ============ IDEA GENERATOR ============ -->
 <section class="idea-hero">
   <div class="idea-hero-inner">
-    <div class="hero-eyebrow"><span class="dot-pulse"></span> Free idea generator &middot; Powered by Claude</div>
-    <h1 class="idea-title">Don&rsquo;t have an idea yet? <span class="hi">Let&rsquo;s find one.</span></h1>
+    <div class="hero-eyebrow"><span class="dot-pulse"></span> Free idea generator</div>
+    <h1 class="idea-title">Don&rsquo;t have an idea yet?<br/><span class="hi">Let&rsquo;s find one.</span></h1>
     <p class="idea-sub">Tell us about a problem you run into in your everyday life. We&rsquo;ll give you three real things you could build and launch after taking The Genesis Challenge &mdash; and how to actually market each one.</p>
 
     <div class="idea-prompt-rotator" aria-hidden="true">
@@ -102,7 +97,7 @@
           <span class="idea-btn-label">Generate 3 ideas</span>
         </button>
       </div>
-      <p class="idea-fineprint">Free to use. We don&rsquo;t store what you type. Powered by Claude Sonnet 4.6.</p>
+      <p class="idea-fineprint">Free to use. We don&rsquo;t store what you type.</p>
     </form>
 
     <div class="idea-status" id="status" hidden></div>
@@ -116,7 +111,7 @@
       <div class="idea-loading-spinner" aria-hidden="true">
         <span></span><span></span><span></span>
       </div>
-      <p class="idea-loading-title">Claude is brainstorming three ideas for you&hellip;</p>
+      <p class="idea-loading-title"><em>itwasverygood.</em> is brainstorming three ideas for you&hellip;</p>
       <p class="idea-loading-sub" id="loadingSub">Reading what you wrote</p>
       <div class="idea-loading-bar"><div class="idea-loading-bar-fill"></div></div>
       <p class="idea-loading-foot">This usually takes 8&ndash;15 seconds.</p>
@@ -133,11 +128,39 @@
     </div>
     <div class="idea-card-grid" id="ideaCards"></div>
 
+    <!-- Email gate: unlocks ideas 2 & 3 -->
+    <section class="idea-unlock" id="unlockSection" hidden>
+      <div class="idea-unlock-card">
+        <div class="idea-unlock-eyebrow">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="4" y="11" width="16" height="10" rx="1.5"/>
+            <path d="M8 11V7a4 4 0 0 1 8 0v4"/>
+          </svg>
+          Two more ideas waiting
+        </div>
+        <h3 class="idea-unlock-title">Drop your email to unlock the other two.</h3>
+        <p class="idea-unlock-sub">We&rsquo;ll send them straight to your inbox plus the moment doors open Tuesday, April&nbsp;14. No spam, ever.</p>
+        <form class="idea-unlock-form" id="unlockForm">
+          <input
+            class="input"
+            id="unlockEmail"
+            type="email"
+            placeholder="you@example.com"
+            aria-label="Email address"
+            required
+          />
+          <button class="btn btn-dark" type="submit" id="unlockBtn">Unlock the other two ideas</button>
+        </form>
+        <div class="idea-status" id="unlockStatus" hidden></div>
+        <p class="idea-unlock-foot">By unlocking, you&rsquo;ll also join the waitlist for The Genesis Challenge.</p>
+      </div>
+    </section>
+
     <div class="idea-cta-card">
       <h3 class="idea-cta-title">Like one of these? Build it for real.</h3>
       <p class="idea-cta-sub">The Genesis Challenge is a 3-hour build session that takes you from blank screen to a launched website, app, or online business. Doors open Tuesday, April&nbsp;14.</p>
       <div class="idea-cta-row">
-        <a href="login.html" class="btn btn-dark">Join the waitlist</a>
+        <a href="/login" class="btn btn-dark">Join the waitlist</a>
         <button class="btn btn-ghost" type="button" id="regenBtn">Generate three more</button>
       </div>
     </div>
@@ -148,7 +171,7 @@
 <footer class="footer" id="contact">
   <div class="footer-inner">
     <div class="footer-brand">
-      <a href="index.html" class="brand brand-light">
+      <a href="/" class="brand brand-light">
         <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
           <g fill="#C8633A">
             <circle cx="16" cy="16" r="6"/>

@@ -98,6 +98,29 @@
 }
 .auth-fineprint a { text-decoration: underline; }
 
+.auth-success[hidden] { display: none; }
+.auth-success {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.auth-success .auth-title { margin-top: 4px; }
+.auth-success .auth-sub { margin-bottom: 8px; }
+.auth-success .btn { margin-top: 18px; }
+.success-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 999px;
+  background: rgba(107, 142, 78, 0.12);
+  color: #5b7842;
+  margin-bottom: 18px;
+}
+.success-check svg { width: 36px; height: 36px; }
+
 .auth-trust {
   margin-top: 28px;
   text-align: center;

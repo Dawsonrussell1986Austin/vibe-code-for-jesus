@@ -25,6 +25,19 @@ const loadingSub = document.getElementById("loadingSub");
 const resultsSection = document.getElementById("results");
 const cardGrid = document.getElementById("ideaCards");
 const regenBtn = document.getElementById("regenBtn");
+const unlockSection = document.getElementById("unlockSection");
+const unlockForm = document.getElementById("unlockForm");
+const unlockEmail = document.getElementById("unlockEmail");
+const unlockBtn = document.getElementById("unlockBtn");
+const unlockStatus = document.getElementById("unlockStatus");
+
+// ---------- gate state ----------
+const UNLOCK_KEY = "vcfj_idea_unlocked";
+let isUnlocked = false;
+try {
+  isUnlocked = localStorage.getItem(UNLOCK_KEY) === "true";
+} catch {}
+let lastIdeas = null;
 
 // ---------- loading state ----------
 const LOADING_STEPS = [
@@ -96,48 +109,65 @@ function clearStatus() {
 }
 
 // ---------- render ----------
+function buildCard(idea, i) {
+  const card = document.createElement("article");
+  card.className = "idea-card";
+  card.innerHTML = `
+    <div class="idea-card-num">${String(i + 1).padStart(2, "0")}</div>
+    <h3 class="idea-card-name">${escapeHtml(idea.name || "")}</h3>
+    <p class="idea-card-tagline">${escapeHtml(idea.tagline || "")}</p>
+    <p class="idea-card-body">${escapeHtml(idea.what_it_does || "")}</p>
+
+    <div class="idea-card-section">
+      <p class="idea-card-section-label">Build first</p>
+      <p class="idea-card-section-body">${escapeHtml(idea.build_first || "")}</p>
+    </div>
+
+    <div class="idea-card-marketing">
+      <div class="market-block">
+        <p class="market-label">Audience</p>
+        <p class="market-body">${escapeHtml(idea.marketing?.audience || "")}</p>
+      </div>
+      <div class="market-block">
+        <p class="market-label">Where to find them</p>
+        <p class="market-body">${escapeHtml(idea.marketing?.where_to_find_them || "")}</p>
+      </div>
+      <div class="market-block">
+        <p class="market-label">The hook</p>
+        <p class="market-body market-hook">&ldquo;${escapeHtml(idea.marketing?.the_hook || "")}&rdquo;</p>
+      </div>
+    </div>
+  `;
+  return card;
+}
+
 function renderIdeas(ideas) {
+  lastIdeas = ideas;
   cardGrid.innerHTML = "";
-  ideas.forEach((idea, i) => {
-    const card = document.createElement("article");
-    card.className = "idea-card";
-    card.innerHTML = `
-      <div class="idea-card-num">${String(i + 1).padStart(2, "0")}</div>
-      <h3 class="idea-card-name">${escapeHtml(idea.name || "")}</h3>
-      <p class="idea-card-tagline">${escapeHtml(idea.tagline || "")}</p>
-      <p class="idea-card-body">${escapeHtml(idea.what_it_does || "")}</p>
 
-      <div class="idea-card-section">
-        <p class="idea-card-section-label">Build first</p>
-        <p class="idea-card-section-body">${escapeHtml(idea.build_first || "")}</p>
-      </div>
+  // Always render idea #1
+  cardGrid.appendChild(buildCard(ideas[0], 0));
 
-      <div class="idea-card-section">
-        <p class="idea-card-section-label">How to market it</p>
-        <div class="idea-card-marketing">
-          <div class="market-block">
-            <p class="market-label">Audience</p>
-            <p class="market-body">${escapeHtml(idea.marketing?.audience || "")}</p>
-          </div>
-          <div class="market-block">
-            <p class="market-label">Where to find them</p>
-            <p class="market-body">${escapeHtml(idea.marketing?.where_to_find_them || "")}</p>
-          </div>
-          <div class="market-block">
-            <p class="market-label">The hook</p>
-            <p class="market-body market-hook">&ldquo;${escapeHtml(idea.marketing?.the_hook || "")}&rdquo;</p>
-          </div>
-        </div>
-      </div>
-    `;
-    cardGrid.appendChild(card);
-  });
+  if (isUnlocked) {
+    // Skip the gate, render the rest directly
+    if (ideas[1]) cardGrid.appendChild(buildCard(ideas[1], 1));
+    if (ideas[2]) cardGrid.appendChild(buildCard(ideas[2], 2));
+    unlockSection.hidden = true;
+  } else {
+    unlockSection.hidden = false;
+  }
 
   resultsSection.hidden = false;
-  // Scroll results into view smoothly.
   setTimeout(() => {
     resultsSection.scrollIntoView({ behavior: "smooth", block: "start" });
   }, 60);
+}
+
+function revealLockedIdeas() {
+  if (!lastIdeas) return;
+  if (lastIdeas[1]) cardGrid.appendChild(buildCard(lastIdeas[1], 1));
+  if (lastIdeas[2]) cardGrid.appendChild(buildCard(lastIdeas[2], 2));
+  unlockSection.hidden = true;
 }
 
 function escapeHtml(s) {
@@ -204,4 +234,53 @@ regenBtn.addEventListener("click", () => {
   clearStatus();
   textarea.focus();
   textarea.scrollIntoView({ behavior: "smooth", block: "center" });
+});
+
+// ---------- unlock form (email gate) ----------
+function showUnlockStatus(msg, kind = "error") {
+  unlockStatus.hidden = false;
+  unlockStatus.textContent = msg;
+  unlockStatus.className = "idea-status idea-status-" + kind;
+}
+function clearUnlockStatus() {
+  unlockStatus.hidden = true;
+  unlockStatus.textContent = "";
+}
+
+async function captureEmail(email) {
+  const res = await fetch("/api/capture-email", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, source: "idea-generator" }),
+  });
+  const data = await res.json().catch(() => ({}));
+  if (!res.ok) {
+    throw new Error(data.error || "Could not save your email. Please try again.");
+  }
+  return data;
+}
+
+unlockForm.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const email = unlockEmail.value.trim();
+  if (!email) {
+    showUnlockStatus("Please enter your email.");
+    return;
+  }
+  clearUnlockStatus();
+  unlockBtn.disabled = true;
+  const originalLabel = unlockBtn.textContent;
+  unlockBtn.textContent = "Unlocking\u2026";
+
+  try {
+    await captureEmail(email);
+    try { localStorage.setItem(UNLOCK_KEY, "true"); } catch {}
+    isUnlocked = true;
+    revealLockedIdeas();
+  } catch (err) {
+    showUnlockStatus(err.message || "Something went wrong. Please try again.");
+  } finally {
+    unlockBtn.disabled = false;
+    unlockBtn.textContent = originalLabel;
+  }
 });
