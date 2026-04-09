@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>I Built a Daily Devotional App in 3 Hours With Claude — Here's the Whole Process | Vibe Code for Jesus</title>
+<meta name="description" content="Idea to App Store-ready in less time than a movie. Every prompt, every screenshot, every wait-that-worked moment." />
+<meta name="keywords" content="build devotional app, Claude Code app, vibe coding tutorial, build iOS app fast, Christian app developer, Bible app build" />
+<meta name="author" content="Will Farmerie" />
+<link rel="canonical" href="https://vibecodeforjesus.com/blog/built-a-devotional-app-in-3-hours-with-claude.html" />
+<meta name="theme-color" content="#F0EEE6" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='%23C8633A'%3E%3Crect x='13.5' y='2' width='5' height='28' rx='1.4'/%3E%3Crect x='6.5' y='8.5' width='19' height='5' rx='1.4'/%3E%3C/g%3E%3C/svg%3E" />
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vibecodeforjesus.com/blog/built-a-devotional-app-in-3-hours-with-claude.html" />
+<meta property="og:title" content="I Built a Daily Devotional App in 3 Hours With Claude — Here's the Whole Process" />
+<meta property="og:description" content="Idea to App Store-ready in less time than a movie. Every prompt, every screenshot, every wait-that-worked moment." />
+<meta property="og:image" content="https://vibecodeforjesus.com/images/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="article:published_time" content="2026-01-14T09:00:00-06:00" />
+<meta property="article:author" content="Will Farmerie" />
+<meta property="article:section" content="Story" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="I Built a Daily Devotional App in 3 Hours With Claude — Here's the Whole Process" />
+<meta name="twitter:description" content="Idea to App Store-ready in less time than a movie. Every prompt, every screenshot, every wait-that-worked moment." />
+<meta name="twitter:image" content="https://vibecodeforjesus.com/images/og-image.jpg" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "I Built a Daily Devotional App in 3 Hours With Claude — Here's the Whole Process",
+  "datePublished": "2026-01-14T09:00:00-06:00",
+  "dateModified": "2026-01-14T09:00:00-06:00",
+  "author": { "@type": "Person", "name": "Will Farmerie" },
+  "publisher": { "@type": "Organization", "name": "Vibe Code for Jesus", "url": "https://vibecodeforjesus.com" },
+  "image": "https://vibecodeforjesus.com/images/og-image.jpg",
+  "mainEntityOfPage": "https://vibecodeforjesus.com/blog/built-a-devotional-app-in-3-hours-with-claude.html",
+  "description": "Idea to App Store-ready in less time than a movie. Every prompt, every screenshot, every wait-that-worked moment."
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="../blog-styles.css" />
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <g fill="#C8633A">
+          <rect x="13.5" y="2" width="5" height="28" rx="1.4"/>
+          <rect x="6.5" y="8.5" width="19" height="5" rx="1.4"/>
+        </g>
+      </svg>
+      <span class="brand-name">Vibe Code for Jesus</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html#challenge">The Challenge</a>
+      <a href="../index.html#modules">Modules</a>
+      <a href="../blog.html">Blog</a>
+      <a href="../index.html#pricing">Pricing</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="../login.html">Sign in</a>
+      <a class="btn btn-dark" href="../login.html">Start free trial</a>
+    </div>
+  </div>
+</header>
+
+<article class="post-article">
+  <a href="../blog.html" class="back-blog">← Back to blog</a>
+  <p class="post-article-eyebrow">Story · 10 min read</p>
+  <h1 class="post-article-title">I Built a Daily Devotional App in 3 Hours With Claude &mdash; Here&rsquo;s the Whole Process</h1>
+  <div class="post-article-meta">
+    <div class="post-author-avatar">WF</div>
+    <div><strong>Will Farmerie</strong> · January 14, 2026</div>
+  </div>
+
+  <div class="post-article-body">
+
+<p>Last Thursday I had three hours between meetings and an idea I&rsquo;d been sitting on for six months: a daily Psalms reading app that just shows you the next Psalm and lets you mark it complete. No streaks, no gamification, no email signup. Open it, read, close it.</p>
+
+<p>By 5:47 p.m. it was on TestFlight. Here&rsquo;s exactly how it happened, every prompt and every wrong turn included.</p>
+
+<h2>Hour 1: Scaffolding (and the wrong start)</h2>
+
+<p>I opened a new folder, typed <code>claude</code>, and gave it this:</p>
+
+<blockquote>I want to build a simple iOS app called Psalm Daily. It shows the user the next Psalm in order. They can tap to mark it as read. Tomorrow it shows the next one. That&rsquo;s the whole app. Use Swift and SwiftUI. No backend needed for v1. Store progress on the device.</blockquote>
+
+<p>Claude came back with a plan: project structure, the data model (just a list of Psalms and a &ldquo;current index&rdquo; saved to UserDefaults), the views, and a question: &ldquo;Where do you want me to get the actual Psalm text from? I can include public-domain text in the bundle, or pull from an API.&rdquo;</p>
+
+<p>I went with the bundled option. Less to break.</p>
+
+<p>Twenty minutes later I had a running iOS app with a placeholder UI showing &ldquo;Psalm 1&rdquo; and a button. It was ugly. It worked.</p>
+
+<h3>The wrong turn</h3>
+
+<p>I asked Claude to add streaks and notifications. It built them. I tried them out. They were fine. Then I deleted both, because they made the app feel like every other Bible app on the market and the whole point was that it shouldn&rsquo;t.</p>
+
+<p>This is the part of vibe coding nobody talks about: <strong>Claude will build whatever you ask for, including the things you shouldn&rsquo;t ask for.</strong> Half of being good at this is being willing to delete what you just built.</p>
+
+<h2>Hour 2: Make it beautiful</h2>
+
+<p>I sent Claude a screenshot of an app I love (the Stoic app, if you&rsquo;re curious) and said:</p>
+
+<blockquote>Make Psalm Daily feel like this. Calm, generous spacing, big serif headlines, no distractions. The current Psalm number should feel important. The reading should be easy on the eyes.</blockquote>
+
+<p>Forty-five minutes of back and forth and the UI looked like something I&rsquo;d be proud to ship. Big &ldquo;Praying the Psalms&rdquo; header, the day of the week in a small caps subtitle, the Psalm rendered in a beautiful serif, a single soft button at the bottom: &ldquo;I&rsquo;ve read this.&rdquo;</p>
+
+<p>This is where Claude really earned its keep. I have opinions about typography but I cannot for the life of me write Swift UI from scratch. Claude wrote it. I directed it.</p>
+
+<h2>Hour 3: Ship</h2>
+
+<p>The last hour was the boring stuff that used to take me a week:</p>
+
+<ul>
+  <li>Set up the iOS app icon (Claude generated 4 versions, I picked one)</li>
+  <li>Wired up the launch screen</li>
+  <li>Filled out the App Store metadata</li>
+  <li>Created the App Store screenshots</li>
+  <li>Submitted to TestFlight</li>
+</ul>
+
+<p>I&rsquo;m going to be honest: the App Store submission process is still a pain. Apple makes you do it. Claude made it 10× faster but it&rsquo;s not 10 minutes &mdash; it&rsquo;s an hour.</p>
+
+<p>At 5:47 p.m. I sent the TestFlight invite to Dawson. He installed it on his phone. It worked on the first try.</p>
+
+<h2>The whole prompt list</h2>
+
+<p>For people who want the receipts, here are the actual prompts I used in order:</p>
+
+<ol>
+  <li>The scaffolding prompt above</li>
+  <li>&ldquo;Add the full text of all 150 Psalms in public-domain (KJV) as a bundled JSON file&rdquo;</li>
+  <li>&ldquo;Persist the current Psalm index to UserDefaults so it survives app restarts&rdquo;</li>
+  <li>&ldquo;Make the UI feel calm and generous &mdash; here&rsquo;s a screenshot for inspiration&rdquo; (with image)</li>
+  <li>&ldquo;Use Newsreader as the headline font and SF Pro for body&rdquo;</li>
+  <li>&ldquo;Add a soft completion button at the bottom that animates when tapped&rdquo;</li>
+  <li>&ldquo;Generate an app icon &mdash; minimal, off-white background, single thin orange cross&rdquo;</li>
+  <li>&ldquo;Help me write the App Store description&rdquo;</li>
+  <li>&ldquo;What metadata do I need to submit to TestFlight?&rdquo;</li>
+</ol>
+
+<p>That&rsquo;s nine prompts. Three hours. One real iOS app on TestFlight.</p>
+
+<h2>What I&rsquo;d do differently next time</h2>
+
+<p>One thing: I&rsquo;d start with the App Store submission stuff <em>first</em>, not last. The boring metadata work fills your brain in a way that makes creative work hard. Get it out of the way while you&rsquo;re still mentally fresh.</p>
+
+<p>Other than that &mdash; honestly, I&rsquo;d do exactly the same thing. Every step worked. Every prompt worked. The hardest part was keeping the scope small and resisting the urge to add features Claude was happy to build for me.</p>
+
+<p>If you&rsquo;ve been sitting on an idea, your three hours starts now.</p>
+
+    <div class="post-cta">
+      <h3>Ready to build your own?</h3>
+      <p>Our 3-Hour Build Challenge walks you through every step. Start your free 7-day trial today.</p>
+      <a href="../login.html" class="btn btn-dark">Start free trial</a>
+    </div>
+  </div>
+</article>
+
+</body>
+</html>

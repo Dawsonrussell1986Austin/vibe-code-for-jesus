@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>The Course · Vibe Code for Jesus</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="course-styles.css" />
+</head>
+<body class="course-body">
+
+<!-- ============ APP SHELL ============ -->
+<div class="app-shell">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <a href="index.html" class="brand sidebar-brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <g fill="#C8633A">
+          <rect x="13.5" y="2" width="5" height="28" rx="1.4"/>
+          <rect x="6.5" y="8.5" width="19" height="5" rx="1.4"/>
+        </g>
+      </svg>
+      <span class="brand-name">Vibe Code for Jesus</span>
+    </a>
+
+    <nav class="sidebar-nav">
+      <a href="#dashboard" class="side-link side-link-active" data-route="dashboard">
+        <span class="side-icon">◉</span> Dashboard
+      </a>
+      <a href="#modules" class="side-link" data-route="modules">
+        <span class="side-icon">▦</span> All modules
+      </a>
+      <a href="#qa" class="side-link" data-route="qa">
+        <span class="side-icon">●</span> Live Q&amp;A
+      </a>
+      <a href="#community" class="side-link" data-route="community">
+        <span class="side-icon">✦</span> Community
+      </a>
+      <a href="#account" class="side-link" data-route="account">
+        <span class="side-icon">○</span> Account
+      </a>
+    </nav>
+
+    <div class="sidebar-progress">
+      <div class="sidebar-progress-label">Your progress</div>
+      <div class="progress-bar"><div class="progress-fill" id="sidebarProgressFill"></div></div>
+      <div class="progress-meta"><span id="sidebarProgressText">0 of 9 complete</span></div>
+    </div>
+
+    <div class="sidebar-user">
+      <div class="user-avatar" id="userAvatar">U</div>
+      <div class="user-meta">
+        <div class="user-name" id="userName">Loading…</div>
+        <div class="user-email" id="userEmail"></div>
+      </div>
+      <button class="user-logout" id="logoutBtn" title="Sign out">↗</button>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN ============ -->
+  <main class="course-main" id="mainContent">
+    <!-- Routed views inject here -->
+  </main>
+</div>
+
+<script type="module" src="course.js"></script>
+</body>
+</html>

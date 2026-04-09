@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>GitHub for Beginners: A Christian Builder's Guide to Version Control Without the Tears | Vibe Code for Jesus</title>
+<meta name="description" content="Everyone says Git is essential. Nobody tells you how to use it without breaking everything. This guide fixes that." />
+<meta name="keywords" content="GitHub for beginners, Git tutorial, version control, vibe coding, Claude Code Git, GitHub Christian, learn Git fast" />
+<meta name="author" content="Will Farmerie" />
+<link rel="canonical" href="https://vibecodeforjesus.com/blog/github-for-beginners-christian-builders-guide.html" />
+<meta name="theme-color" content="#F0EEE6" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='%23C8633A'%3E%3Crect x='13.5' y='2' width='5' height='28' rx='1.4'/%3E%3Crect x='6.5' y='8.5' width='19' height='5' rx='1.4'/%3E%3C/g%3E%3C/svg%3E" />
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vibecodeforjesus.com/blog/github-for-beginners-christian-builders-guide.html" />
+<meta property="og:title" content="GitHub for Beginners: A Christian Builder's Guide to Version Control Without the Tears" />
+<meta property="og:description" content="Everyone says Git is essential. Nobody tells you how to use it without breaking everything. This guide fixes that." />
+<meta property="og:image" content="https://vibecodeforjesus.com/images/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="article:published_time" content="2026-01-28T09:00:00-06:00" />
+<meta property="article:author" content="Will Farmerie" />
+<meta property="article:section" content="Tutorial" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="GitHub for Beginners: A Christian Builder's Guide to Version Control Without the Tears" />
+<meta name="twitter:description" content="Everyone says Git is essential. Nobody tells you how to use it without breaking everything. This guide fixes that." />
+<meta name="twitter:image" content="https://vibecodeforjesus.com/images/og-image.jpg" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "GitHub for Beginners: A Christian Builder's Guide to Version Control Without the Tears",
+  "datePublished": "2026-01-28T09:00:00-06:00",
+  "dateModified": "2026-01-28T09:00:00-06:00",
+  "author": { "@type": "Person", "name": "Will Farmerie" },
+  "publisher": { "@type": "Organization", "name": "Vibe Code for Jesus", "url": "https://vibecodeforjesus.com" },
+  "image": "https://vibecodeforjesus.com/images/og-image.jpg",
+  "mainEntityOfPage": "https://vibecodeforjesus.com/blog/github-for-beginners-christian-builders-guide.html",
+  "description": "Everyone says Git is essential. Nobody tells you how to use it without breaking everything. This guide fixes that."
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="../blog-styles.css" />
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <g fill="#C8633A">
+          <rect x="13.5" y="2" width="5" height="28" rx="1.4"/>
+          <rect x="6.5" y="8.5" width="19" height="5" rx="1.4"/>
+        </g>
+      </svg>
+      <span class="brand-name">Vibe Code for Jesus</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html#challenge">The Challenge</a>
+      <a href="../index.html#modules">Modules</a>
+      <a href="../blog.html">Blog</a>
+      <a href="../index.html#pricing">Pricing</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="../login.html">Sign in</a>
+      <a class="btn btn-dark" href="../login.html">Start free trial</a>
+    </div>
+  </div>
+</header>
+
+<article class="post-article">
+  <a href="../blog.html" class="back-blog">← Back to blog</a>
+  <p class="post-article-eyebrow">Tutorial · 8 min read</p>
+  <h1 class="post-article-title">GitHub for Beginners: A Christian Builder&rsquo;s Guide to Version Control Without the Tears</h1>
+  <div class="post-article-meta">
+    <div class="post-author-avatar">WF</div>
+    <div><strong>Will Farmerie</strong> · January 28, 2026</div>
+  </div>
+
+  <div class="post-article-body">
+
+<p>Git is the most important tool in software development that nobody can explain in a single sentence. Here&rsquo;s my attempt: <strong>Git is the &ldquo;save&rdquo; button for your code, except every save is forever and you can travel back in time.</strong></p>
+
+<p>That&rsquo;s the whole concept. Everything else is details.</p>
+
+<p>If you&rsquo;ve avoided Git because every tutorial starts with branching strategies and rebase workflows, this guide is for you. We&rsquo;re going to learn just enough Git to never lose your work and never ship a broken version &mdash; and let Claude do the rest.</p>
+
+<h2>Why you actually need this</h2>
+
+<p>Three reasons:</p>
+
+<ol>
+  <li><strong>You will break something.</strong> Eventually, on every project, you&rsquo;ll change something and the whole thing will stop working. Git lets you go back to the last version that worked.</li>
+  <li><strong>You need to deploy.</strong> Vercel, Netlify, and every other hosting service uses GitHub. If your code isn&rsquo;t on GitHub, you can&rsquo;t deploy it.</li>
+  <li><strong>You will collaborate.</strong> Even if it&rsquo;s just &ldquo;you and Claude.&rdquo; Git is how Claude knows what changed.</li>
+</ol>
+
+<h2>The five commands you actually need</h2>
+
+<p>Forget the 200-command Git reference. These are the only ones you&rsquo;ll use 99% of the time.</p>
+
+<h3>1. <code>git init</code></h3>
+
+<p>You run this once per project, in the project folder, to tell Git to start tracking changes.</p>
+
+<pre><code>cd my-project
+git init</code></pre>
+
+<h3>2. <code>git add .</code></h3>
+
+<p>This stages all your current changes &mdash; basically saying &ldquo;I want to save these.&rdquo;</p>
+
+<pre><code>git add .</code></pre>
+
+<h3>3. <code>git commit -m "what I changed"</code></h3>
+
+<p>This is the actual save. The text in quotes is your note-to-future-self about what changed.</p>
+
+<pre><code>git commit -m "Added the contact form"</code></pre>
+
+<h3>4. <code>git push</code></h3>
+
+<p>This sends your saved changes up to GitHub.</p>
+
+<pre><code>git push</code></pre>
+
+<h3>5. <code>git status</code></h3>
+
+<p>This tells you what state your project is in. Run it whenever you&rsquo;re confused.</p>
+
+<pre><code>git status</code></pre>
+
+<p>That&rsquo;s it. That&rsquo;s the whole list. You can build literally any project with these five commands.</p>
+
+<h2>Setting up your first GitHub repo (5 minutes)</h2>
+
+<p>Step by step:</p>
+
+<ol>
+  <li>Go to <a href="https://github.com" target="_blank" rel="noopener">github.com</a> and create a free account</li>
+  <li>Click the green &ldquo;New&rdquo; button to create a new repository</li>
+  <li>Give it a name (e.g., <code>my-first-vibe-project</code>) and click &ldquo;Create repository&rdquo;</li>
+  <li>GitHub will show you a page of commands &mdash; <strong>ignore most of them</strong></li>
+  <li>Copy just the line that starts with <code>git remote add origin</code></li>
+  <li>In your project folder, run that command, then <code>git push -u origin main</code></li>
+</ol>
+
+<p>Done. Your code is on GitHub.</p>
+
+<h2>The &ldquo;let Claude do it&rdquo; workflow</h2>
+
+<p>Here&rsquo;s the secret nobody tells you: once you understand the five commands above, you basically never need to run them yourself again. You can just say:</p>
+
+<blockquote>Commit my changes with a message describing what I just did, then push to GitHub.</blockquote>
+
+<p>Claude will run the commands. You&rsquo;ll see them happen. You&rsquo;ll learn by watching. After a few days you&rsquo;ll be running them yourself without thinking.</p>
+
+<h2>The one thing that will trip you up</h2>
+
+<p>Authentication. The first time you try to push to GitHub from your terminal, GitHub will ask you to log in &mdash; and your password won&rsquo;t work, because GitHub doesn&rsquo;t accept passwords for git operations anymore.</p>
+
+<p>You need a thing called a &ldquo;personal access token.&rdquo; Here&rsquo;s the fix in 30 seconds:</p>
+
+<ol>
+  <li>Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic)</li>
+  <li>Generate a new token with the &ldquo;repo&rdquo; permission</li>
+  <li>Copy the token (it starts with <code>ghp_</code>)</li>
+  <li>When git asks for your password, paste the token instead</li>
+</ol>
+
+<p>Even better: install the GitHub CLI with <code>brew install gh</code> on Mac, then run <code>gh auth login</code> and let it handle everything for you.</p>
+
+<h2>What about branches, rebasing, merging, cherry-picking…?</h2>
+
+<p>You&rsquo;ll learn them when you need them. For most personal projects you&rsquo;ll never need them. For the projects in our 3-Hour Challenge, you definitely don&rsquo;t need them.</p>
+
+<p>Get the five commands down. Get a project on GitHub. Push when you make changes. That&rsquo;s 95% of what professional developers actually do, and 100% of what you need to ship your first thing.</p>
+
+    <div class="post-cta">
+      <h3>Ready to build your own?</h3>
+      <p>Our 3-Hour Build Challenge walks you through every step. Start your free 7-day trial today.</p>
+      <a href="../login.html" class="btn btn-dark">Start free trial</a>
+    </div>
+  </div>
+</article>
+
+</body>
+</html>

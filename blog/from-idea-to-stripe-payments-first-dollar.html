@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>From Idea to Stripe Payments: How I Took My First $1 With Claude Code | Vibe Code for Jesus</title>
+<meta name="description" content="A step-by-step walkthrough of going from blank file to a real, working checkout page that takes real money — in under 90 minutes." />
+<meta name="keywords" content="Stripe Claude Code, accept payments online, online business build, vibe coding monetization, first sale, Stripe checkout tutorial" />
+<meta name="author" content="Dawson Russell" />
+<link rel="canonical" href="https://vibecodeforjesus.com/blog/from-idea-to-stripe-payments-first-dollar.html" />
+<meta name="theme-color" content="#F0EEE6" />
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cg fill='%23C8633A'%3E%3Crect x='13.5' y='2' width='5' height='28' rx='1.4'/%3E%3Crect x='6.5' y='8.5' width='19' height='5' rx='1.4'/%3E%3C/g%3E%3C/svg%3E" />
+
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://vibecodeforjesus.com/blog/from-idea-to-stripe-payments-first-dollar.html" />
+<meta property="og:title" content="From Idea to Stripe Payments: How I Took My First $1 With Claude Code" />
+<meta property="og:description" content="A step-by-step walkthrough of going from blank file to a real, working checkout page that takes real money — in under 90 minutes." />
+<meta property="og:image" content="https://vibecodeforjesus.com/images/og-image.jpg" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="article:published_time" content="2026-03-12T09:00:00-06:00" />
+<meta property="article:author" content="Dawson Russell" />
+<meta property="article:section" content="Make money" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="From Idea to Stripe Payments: How I Took My First $1 With Claude Code" />
+<meta name="twitter:description" content="A step-by-step walkthrough of going from blank file to a real, working checkout page that takes real money — in under 90 minutes." />
+<meta name="twitter:image" content="https://vibecodeforjesus.com/images/og-image.jpg" />
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "From Idea to Stripe Payments: How I Took My First $1 With Claude Code",
+  "datePublished": "2026-03-12T09:00:00-06:00",
+  "dateModified": "2026-03-12T09:00:00-06:00",
+  "author": { "@type": "Person", "name": "Dawson Russell" },
+  "publisher": { "@type": "Organization", "name": "Vibe Code for Jesus", "url": "https://vibecodeforjesus.com" },
+  "image": "https://vibecodeforjesus.com/images/og-image.jpg",
+  "mainEntityOfPage": "https://vibecodeforjesus.com/blog/from-idea-to-stripe-payments-first-dollar.html",
+  "description": "A step-by-step walkthrough of going from blank file to a real, working checkout page that takes real money — in under 90 minutes."
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="../styles.css" />
+<link rel="stylesheet" href="../blog-styles.css" />
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <g fill="#C8633A">
+          <rect x="13.5" y="2" width="5" height="28" rx="1.4"/>
+          <rect x="6.5" y="8.5" width="19" height="5" rx="1.4"/>
+        </g>
+      </svg>
+      <span class="brand-name">Vibe Code for Jesus</span>
+    </a>
+    <nav class="nav-links">
+      <a href="../index.html#challenge">The Challenge</a>
+      <a href="../index.html#modules">Modules</a>
+      <a href="../blog.html">Blog</a>
+      <a href="../index.html#pricing">Pricing</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="../login.html">Sign in</a>
+      <a class="btn btn-dark" href="../login.html">Start free trial</a>
+    </div>
+  </div>
+</header>
+
+<article class="post-article">
+  <a href="../blog.html" class="back-blog">← Back to blog</a>
+  <p class="post-article-eyebrow">Make money · 9 min read</p>
+  <h1 class="post-article-title">From Idea to Stripe Payments: How I Took My First $1 With Claude Code</h1>
+  <div class="post-article-meta">
+    <div class="post-author-avatar">DR</div>
+    <div><strong>Dawson Russell</strong> · March 12, 2026</div>
+  </div>
+
+  <div class="post-article-body">
+
+<p>The most powerful moment in any software project isn&rsquo;t when you ship the first version. It&rsquo;s when you take the first dollar.</p>
+
+<p>Something changes in your brain when a stranger pays you for something you built. The project stops being a hobby and starts being a business. The work feels different. You behave differently.</p>
+
+<p>This post is about that moment, and how to get there in 90 minutes from a blank file.</p>
+
+<h2>The setup</h2>
+
+<p>I built a tiny tool last week called &ldquo;Sermon Slides Generator.&rdquo; You paste in your sermon outline, it generates a clean set of slide images you can drop into Keynote or PowerPoint. That&rsquo;s the whole product. I built it because a pastor friend asked for something exactly like it.</p>
+
+<p>I priced it at $9 one-time. I figured if 100 pastors a year bought it, that&rsquo;d be a nice little side project. (Spoiler: it did much better than that.)</p>
+
+<p>Here&rsquo;s how I got it from idea to first sale.</p>
+
+<h2>Hour 1: Build the tool</h2>
+
+<p>I told Claude:</p>
+
+<blockquote>I want to build a one-page Next.js web app called Sermon Slides Generator. The user pastes in a sermon outline, picks a color theme (white, dark, sepia), and clicks a button. The app generates a set of slide images (1920×1080 PNG) — one per major point in the outline — with the heading at the top and the supporting text below. They can download all slides as a zip.</blockquote>
+
+<p>Claude scaffolded the project, picked the libraries (sharp for image generation, jszip for the zip), and built a working prototype in about 35 minutes. The first version was ugly. I spent another 20 minutes telling Claude to make the slide layouts more elegant.</p>
+
+<p>Result after one hour: a working tool, locally only, that generated genuinely beautiful slides.</p>
+
+<h2>Hour 2: Add Stripe Checkout</h2>
+
+<p>Here&rsquo;s where the magic happened. I told Claude:</p>
+
+<blockquote>Add Stripe Checkout. The user can use the tool for free up to 5 slides. After that, they hit a paywall and need to pay $9 to unlock unlimited use. Use Stripe Checkout (the hosted page), not Stripe Elements. Make it as simple as possible.</blockquote>
+
+<p>Claude asked a few clarifying questions (&ldquo;Should this be a one-time payment or a subscription?&rdquo; &ldquo;Should access be tied to email or a session?&rdquo;) and then built it. The whole Stripe integration took about 30 minutes including:</p>
+
+<ul>
+  <li>Setting up the Stripe account (Claude walked me through it)</li>
+  <li>Creating the product and price in Stripe</li>
+  <li>Adding the checkout session API route</li>
+  <li>Adding the webhook to mark the user as paid</li>
+  <li>Adding the success and cancel pages</li>
+  <li>Testing with a Stripe test card</li>
+</ul>
+
+<p>By minute 90 the entire flow worked: free trial → paywall → Stripe checkout → unlocked access.</p>
+
+<h2>The first dollar</h2>
+
+<p>I deployed it to Vercel (took 90 seconds), texted my pastor friend the link, and asked him to try it. He paid $9 with his real card. I got the Stripe notification on my phone.</p>
+
+<p>I screamed.</p>
+
+<p>It was the smallest amount of money I&rsquo;ve ever made and one of the most emotional moments of my professional life. Something I built &mdash; not a deck or a pitch, an actual <em>product</em> &mdash; made real money from a real person.</p>
+
+<h2>The exact Stripe setup steps</h2>
+
+<p>For people who want to do this themselves, here&rsquo;s the order:</p>
+
+<ol>
+  <li>Sign up at <a href="https://stripe.com" target="_blank" rel="noopener">stripe.com</a> (free)</li>
+  <li>Activate your account (you&rsquo;ll need to enter your business info or your personal info as a sole proprietor)</li>
+  <li>Get your API keys: Dashboard → Developers → API keys. You need both the publishable and secret key.</li>
+  <li>Create a product and price in the Stripe dashboard for whatever you&rsquo;re selling</li>
+  <li>Tell Claude: &ldquo;Add Stripe Checkout to this project. Here&rsquo;s my publishable key, here&rsquo;s my price ID. Use the hosted Checkout, not Elements.&rdquo;</li>
+  <li>Test it with the Stripe test card <code>4242 4242 4242 4242</code></li>
+  <li>When it works, switch your keys to live mode and try a real $1 charge to yourself</li>
+  <li>Refund yourself in the Stripe dashboard (it&rsquo;s one click)</li>
+</ol>
+
+<p>That&rsquo;s the whole process. Stripe is genuinely magic.</p>
+
+<h2>What happened next</h2>
+
+<p>I posted Sermon Slides Generator in two pastor Facebook groups. Within 48 hours, 31 pastors had paid $9. That&rsquo;s $279 from a project that took 90 minutes to build.</p>
+
+<p>I&rsquo;m not sharing this to brag. I&rsquo;m sharing it because I want every Christian builder reading this to understand: <strong>this is not theoretical anymore.</strong> The cycle of &ldquo;have an idea → build it → take real money for it&rdquo; can now happen in less time than a Sunday afternoon nap.</p>
+
+<p>If you&rsquo;ve been waiting for permission, this is it. Go make your $1.</p>
+
+    <div class="post-cta">
+      <h3>Ready to build your own?</h3>
+      <p>Our 3-Hour Build Challenge walks you through every step. Start your free 7-day trial today.</p>
+      <a href="../login.html" class="btn btn-dark">Start free trial</a>
+    </div>
+  </div>
+</article>
+
+</body>
+</html>
