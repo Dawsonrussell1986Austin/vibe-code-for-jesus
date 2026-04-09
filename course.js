@@ -370,25 +370,33 @@ function viewModule(slug) {
         </div>
       </div>
 
-      <div class="video-wrap" id="videoWrap">
-        <iframe src="${esc(m.video)}" allowfullscreen frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"></iframe>
+      <div class="video-wrap video-wrap-placeholder" id="videoWrap">
+        <div class="video-placeholder">
+          <div class="video-placeholder-eyebrow">
+            <span class="video-placeholder-pulse"></span>
+            Cohort 01 &middot; Opens April 14
+          </div>
+          <h3 class="video-placeholder-title">Module videos drop Tuesday, April 14.</h3>
+          <p class="video-placeholder-sub">We&rsquo;re putting the finishing touches on every lesson so you can ship something real on day one. You&rsquo;re on the waitlist &mdash; we&rsquo;ll email you the moment they&rsquo;re live.</p>
+          <a href="#dashboard" class="btn btn-dark">Back to dashboard</a>
+        </div>
       </div>
 
       <div class="gate-row">
-        <label class="gate-step ${state.videoWatched ? 'gate-step-done' : ''}">
-          <input type="checkbox" id="watchedChk" ${state.videoWatched ? 'checked' : ''} />
+        <label class="gate-step gate-step-disabled">
+          <input type="checkbox" disabled />
           <span class="gate-num">1</span>
-          <span class="gate-text">I&rsquo;ve watched the video</span>
+          <span class="gate-text">Watch the video <em>(unlocks April&nbsp;14)</em></span>
         </label>
         <label class="gate-step ${state.homeworkDownloaded ? 'gate-step-done' : ''}">
           <input type="checkbox" id="hwChk" ${state.homeworkDownloaded ? 'checked' : ''} />
           <span class="gate-num">2</span>
           <span class="gate-text">I&rsquo;ve downloaded the homework</span>
         </label>
-        <label class="gate-step ${done ? 'gate-step-done' : ''}">
-          <input type="checkbox" id="completeChk" ${done ? 'checked' : ''} ${canMark || done ? '' : 'disabled'} />
+        <label class="gate-step gate-step-disabled">
+          <input type="checkbox" disabled />
           <span class="gate-num">3</span>
-          <span class="gate-text">Mark module complete</span>
+          <span class="gate-text">Mark module complete <em>(unlocks April&nbsp;14)</em></span>
         </label>
       </div>
 

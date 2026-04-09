@@ -1,0 +1,11 @@
+{
+  "name": "it-was-very-good",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "it was very good. — the home of The Genesis Challenge.",
+  "dependencies": {
+    "ai": "^5.0.0",
+    "zod": "^3.23.8"
+  }
+}

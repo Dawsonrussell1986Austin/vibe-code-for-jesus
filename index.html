@@ -116,27 +116,54 @@
     </nav>
     <div class="nav-actions">
       <a class="btn btn-ghost" href="login.html">Sign in</a>
-      <a class="btn btn-dark" href="login.html">Start free trial</a>
+      <a class="btn btn-dark" href="login.html">Join the waitlist</a>
     </div>
   </div>
 </header>
+
+<!-- ============ LAUNCH DATE BANNER ============ -->
+<div class="launch-banner" role="status">
+  <div class="launch-banner-inner">
+    <span class="launch-banner-icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" width="18" height="18">
+        <g fill="currentColor">
+          <circle cx="16" cy="16" r="6"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(60 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(120 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(180 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(240 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(300 16 16)"/>
+        </g>
+      </svg>
+    </span>
+    <span class="launch-banner-text">
+      <strong>Doors open Tuesday, April&nbsp;14.</strong> The next cohort of The Genesis Challenge starts in <span class="launch-banner-countdown">5 days</span>.
+    </span>
+    <a href="#pricing" class="launch-banner-cta">Join the waitlist →</a>
+  </div>
+</div>
 
 <!-- ============ HERO ============ -->
 <section class="hero">
   <div class="hero-grid">
     <div class="hero-left">
-      <div class="hero-eyebrow"><span class="dot-pulse"></span> New &middot; 3&#8209;hour build challenge</div>
+      <div class="hero-eyebrow"><span class="dot-pulse"></span> Cohort opens Tuesday, April&nbsp;14</div>
       <h1 class="display">God gave you the idea. <span class="hi">Now build the thing.</span></h1>
       <p class="subhead">Launch a website, app, or online business in 3 hours or less. Yes, <em>hours</em>. Not days. That&rsquo;s how fast AI has become. Built by Christians, for Christians &mdash; to further the Kingdom.</p>
+      <div class="hero-chooser" role="tablist" aria-label="Where you're at">
+        <button type="button" class="hero-chooser-btn is-active" aria-pressed="true">I have an idea</button>
+        <a class="hero-chooser-btn" href="idea-generator.html">I don&rsquo;t have one yet <span class="arrow">&rarr;</span></a>
+      </div>
       <form class="signup-card" id="heroSignup" action="login.html" method="get">
         <a class="btn btn-google" href="login.html?provider=google">
-          <svg viewBox="0 0 18 18" width="16" height="16" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.17-1.84H9v3.49h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.91c1.7-1.57 2.69-3.88 2.69-6.63z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.81 5.96-2.18l-2.91-2.26c-.81.54-1.84.86-3.05.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.71A5.41 5.41 0 0 1 3.68 9c0-.59.1-1.17.29-1.71V4.96H.96A9 9 0 0 0 0 9c0 1.45.35 2.82.96 4.04l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.96l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
-          Continue with Google
+          <svg viewBox="0 0 18 18" width="16" height="16" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2c0-.64-.06-1.25-.17-1.84H9v3.49h4.84a4.14 4.14 0 0 1-1.8 2.72v2.26h2.91c1.7-1.57 2.69-3.88 2.69-6.63z"/><path fill="#34A853" d="M9 18c2.43 0 4.47-.81 5.96-2.18l-2.91-2.26c-.81.54-1.84.86-3.05.86-2.34 0-4.32-1.58-5.03-3.71H.96v2.33A9 9 0 0 0 9 18z"/><path fill="#FBBC05" d="M3.97 10.71A5.41 5.41 0 0 1 3.68 9c0-.59.1-1.17.29-1.71V4.96H.96A9 9 0 0 0 0 9c0 1.45.35 2.82.96 4.04l3.01-2.33z"/><path fill="#FBBC05" d="M3.97 10.71A5.41 5.41 0 0 1 3.68 9c0-.59.1-1.17.29-1.71V4.96H.96A9 9 0 0 0 0 9c0 1.45.35 2.82.96 4.04l3.01-2.33z"/><path fill="#EA4335" d="M9 3.58c1.32 0 2.5.45 3.44 1.35l2.58-2.58C13.46.89 11.43 0 9 0A9 9 0 0 0 .96 4.96l3.01 2.33C4.68 5.16 6.66 3.58 9 3.58z"/></svg>
+          Save my seat with Google
         </a>
         <div class="divider"><span>or</span></div>
         <input class="input" type="email" name="email" placeholder="Enter your email" aria-label="Email address" required />
-        <button class="btn btn-dark btn-block" type="submit">Start my free trial</button>
-        <p class="fineprint">$0 today. Cancel anytime in the first 7 days &mdash; you won&rsquo;t be charged. <a href="#">Privacy Policy</a>.</p>
+        <button class="btn btn-dark btn-block" type="submit">Join the waitlist</button>
+        <p class="fineprint">No charge today. We&rsquo;ll email you when doors open Tuesday, April&nbsp;14. <a href="#">Privacy Policy</a>.</p>
       </form>
     </div>
 
@@ -270,21 +297,26 @@
 <section class="meet" id="challenge">
   <h2 class="section-title">Our Premier 3&#8209;Hour Build Challenge</h2>
   <p class="section-sub">A tried-and-tested step-by-step program designed to take you from zero to launched in a single 3&#8209;hour session &mdash; even if you&rsquo;ve never written a line of code.</p>
-  <div class="video-frame video-thumb">
-    <img class="video-thumb-img" src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=1600&q=80" alt="A developer's screen lit up with code at night" loading="lazy" />
-    <div class="video-thumb-overlay"></div>
-    <div class="video-thumb-content">
-      <div class="video-thumb-eyebrow">Watch the trailer &middot; 2 min</div>
-      <div class="video-thumb-title">From a blank screen to a launched app &mdash; in one Saturday.</div>
-      <div class="video-thumb-meta">
-        <div class="play-btn play-btn-lg" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5v14l11-7z" fill="currentColor"/></svg>
-        </div>
-        <div class="video-thumb-by">
-          <div class="video-thumb-by-label">Hosted by</div>
-          <div class="video-thumb-by-name">Will Farmerie &amp; Dawson Russell</div>
-        </div>
-      </div>
+
+  <div class="launch-card">
+    <div class="launch-card-eyebrow">
+      <span class="launch-card-pulse"></span>
+      Cohort 01 &middot; Waitlist open
+    </div>
+    <div class="launch-card-date">
+      <div class="launch-card-mo">APR</div>
+      <div class="launch-card-day">14</div>
+      <div class="launch-card-day-of-week">Tuesday</div>
+    </div>
+    <h3 class="launch-card-title">Doors open Tuesday, April&nbsp;14.</h3>
+    <p class="launch-card-sub">We&rsquo;re putting the finishing touches on every module so you can ship something real on day one. Drop your email and we&rsquo;ll send you the keys the moment the cohort opens.</p>
+    <div class="launch-card-cta-row">
+      <a href="#pricing" class="btn btn-dark">Join the waitlist</a>
+      <a href="#modules" class="btn btn-ghost">See what&rsquo;s inside</a>
+    </div>
+    <div class="launch-card-by">
+      <span class="launch-card-by-label">Hosted by</span>
+      <span class="launch-card-by-name">Will Farmerie &amp; Dawson Russell</span>
     </div>
   </div>
 </section>
@@ -688,7 +720,7 @@
 <!-- ============ PRICING ============ -->
 <section class="pricing" id="pricing">
   <h2 class="section-title">Choose your path</h2>
-  <p class="section-sub">Start free. If you&rsquo;re not happy in the first 7 days, you won&rsquo;t be charged a dollar.</p>
+  <p class="section-sub">Doors open Tuesday, April&nbsp;14. Reserve your seat now &mdash; you won&rsquo;t be charged until launch day, and the full money&#8209;back guarantee still applies.</p>
   <div class="plan-toggle" role="tablist" aria-label="Plan type">
     <button class="toggle-btn toggle-active" data-tab="individual" type="button">Individual</button>
     <button class="toggle-btn" data-tab="teams" type="button">Teams &amp; Churches</button>
@@ -701,20 +733,20 @@
       <div class="plan-badge">Most popular</div>
       <div class="plan-icon">✦</div>
       <h3 class="plan-name">The 3&#8209;Hour Challenge</h3>
-      <p class="plan-tag">Start free &middot; Launch in 3 hours</p>
+      <p class="plan-tag">Cohort 01 &middot; Opens April&nbsp;14</p>
       <p class="plan-price"><strong>$0</strong><span class="plan-price-unit">today</span></p>
-      <p class="plan-sub">Then $197 after your 7&#8209;day free trial. Cancel anytime, no charge.</p>
-      <a href="#" class="btn btn-dark btn-block">Start 7&#8209;day free trial</a>
-      <p class="plan-features-title">What you get:</p>
+      <p class="plan-sub">$197 once doors open. Cancel anytime before April&nbsp;14, no charge.</p>
+      <a href="login.html" class="btn btn-dark btn-block">Join the waitlist</a>
+      <p class="plan-features-title">What you get on launch day:</p>
       <ul class="plan-features">
         <li>All 8 modules &amp; the full 3&#8209;hour roadmap</li>
-        <li>Claude Code masterclass (4+ hours of video)</li>
+        <li>The complete Claude Code masterclass curriculum</li>
         <li>GitHub &amp; Vercel deployment walkthroughs</li>
         <li>50+ battle&#8209;tested prompts &amp; CLAUDE.md templates</li>
         <li>Website, app &amp; SaaS starter kits</li>
         <li>Daily live Q&amp;A during challenge weeks</li>
         <li>Lifetime updates as Claude evolves</li>
-        <li><strong>Double guarantee</strong> &mdash; free for 7 days, plus full refund if you don&rsquo;t launch in 3</li>
+        <li><strong>Money&#8209;back guarantee</strong> &mdash; full refund if you don&rsquo;t launch in 3 hours</li>
       </ul>
     </div>
 
@@ -725,8 +757,8 @@
       <h3 class="plan-name">The Challenge + VIP</h3>
       <p class="plan-tag">$97 upgrade &middot; the personal touch</p>
       <p class="plan-price"><strong>$0</strong><span class="plan-price-unit">today</span></p>
-      <p class="plan-sub">Then $197 + $97 VIP after your 7&#8209;day free trial. Cancel anytime.</p>
-      <a href="login.html" class="btn btn-dark btn-block">Start 7&#8209;day free trial</a>
+      <p class="plan-sub">$197 + $97 VIP once doors open April&nbsp;14. Cancel anytime before launch.</p>
+      <a href="login.html" class="btn btn-dark btn-block">Join the waitlist</a>
       <p class="plan-features-title">Everything in The Challenge, plus:</p>
       <ul class="plan-features">
         <li><strong>Private community Slack</strong> &mdash; ask questions anytime</li>
@@ -745,15 +777,15 @@
       <h3 class="plan-name">Small Team</h3>
       <p class="plan-tag">Up to 5 seats</p>
       <p class="plan-price"><strong>$497</strong></p>
-      <p class="plan-sub">One&#8209;time &middot; Lifetime access for 5</p>
-      <a href="#" class="btn btn-dark btn-block">Get small team access</a>
+      <p class="plan-sub">One&#8209;time &middot; Lifetime access for 5 &middot; Opens April&nbsp;14</p>
+      <a href="login.html" class="btn btn-dark btn-block">Join the waitlist</a>
       <ul class="plan-features">
         <li>5 seats &mdash; full 3&#8209;Hour Challenge access</li>
         <li>All 8 modules for every team member</li>
         <li>Shared team Discord channel</li>
         <li>Starter kits &amp; prompt libraries</li>
         <li>Team progress dashboard</li>
-        <li>7&#8209;day free trial &mdash; not happy, not charged</li>
+        <li>Money&#8209;back guarantee &mdash; not happy, not charged</li>
       </ul>
     </div>
 
@@ -764,8 +796,8 @@
       <h3 class="plan-name">Team &amp; Church Challenge</h3>
       <p class="plan-tag">Up to 10 seats + live training</p>
       <p class="plan-price"><strong>$997</strong></p>
-      <p class="plan-sub">One&#8209;time &middot; Lifetime access for 10</p>
-      <a href="#" class="btn btn-dark btn-block">Start 7&#8209;day free trial</a>
+      <p class="plan-sub">One&#8209;time &middot; Lifetime access for 10 &middot; Opens April&nbsp;14</p>
+      <a href="login.html" class="btn btn-dark btn-block">Join the waitlist</a>
       <p class="plan-features-title">Everything in Small Team, plus:</p>
       <ul class="plan-features">
         <li><strong>10 seats</strong> &mdash; full 3&#8209;Hour Challenge access</li>
@@ -775,7 +807,7 @@
         <li>Shared project review &amp; feedback sessions</li>
         <li>Dedicated launch planning session</li>
         <li>Priority support channel for your team</li>
-        <li>7&#8209;day free trial &mdash; cancel with no charge</li>
+        <li>Money&#8209;back guarantee &mdash; cancel with no charge</li>
       </ul>
     </div>
 
@@ -799,7 +831,7 @@
     </div>
   </div>
 
-  <p class="pricing-fineprint">*Everything comes with a 7&#8209;day free trial &mdash; you won&rsquo;t be charged until day 8. And if you complete the challenge and don&rsquo;t have a launched website, app, or online business in 3 hours, email us for a full refund. No questions, no hoops.</p>
+  <p class="pricing-fineprint">*Reserve your seat today &mdash; we won&rsquo;t charge a card until doors open Tuesday, April&nbsp;14. And if you complete the challenge and don&rsquo;t have a launched website, app, or online business in 3 hours, email us for a full refund. No questions, no hoops.</p>
 </section>
 
 <script>
@@ -833,7 +865,7 @@
     </details>
     <details class="faq-item">
       <summary>What do I need before I start?<span class="plus">+</span></summary>
-      <p>A laptop (Mac, Windows, or Linux), an internet connection, and about 3 focused hours of your time. We walk you through every install, account, and setup step on camera.</p>
+      <p>A laptop (Mac, Windows, or Linux), an internet connection, and about 3 focused hours of your time. We walk you through every install, account, and setup step in the modules &mdash; you don&rsquo;t need to know any of it before April&nbsp;14.</p>
     </details>
     <details class="faq-item">
       <summary>How does the money&#8209;back guarantee work?<span class="plus">+</span></summary>
@@ -853,7 +885,11 @@
     </details>
     <details class="faq-item">
       <summary>How is this different from a YouTube tutorial?<span class="plus">+</span></summary>
-      <p>Tutorials show you how to copy. The Challenge gives you a roadmap, a community, live Q&amp;A, battle&#8209;tested prompt templates, and a deadline — so you actually finish and ship.</p>
+      <p>Tutorials show you how to copy. The Challenge gives you a roadmap, a community, live Q&amp;A, battle&#8209;tested prompt templates, and a deadline &mdash; so you actually finish and ship.</p>
+    </details>
+    <details class="faq-item">
+      <summary>When does the cohort actually start?<span class="plus">+</span></summary>
+      <p>Cohort 01 opens Tuesday, April&nbsp;14. Right now you&rsquo;re joining the waitlist &mdash; we&rsquo;ll email you the moment doors open and you&rsquo;ll get instant access to every module on day one. No charge until launch day.</p>
     </details>
   </div>
 </section>

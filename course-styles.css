@@ -30,6 +30,25 @@
   width: 100%;
   box-shadow: 0 20px 50px -30px rgba(27,24,18,0.18);
 }
+.auth-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  margin: 0 auto 14px;
+  padding: 6px 14px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid rgba(200, 99, 58, 0.3);
+  border-radius: 999px;
+  background: rgba(200, 99, 58, 0.06);
+}
+.auth-card .auth-eyebrow {
+  display: flex;
+}
 .auth-title {
   font-family: var(--serif);
   font-weight: 400;
@@ -605,6 +624,64 @@
   height: 100%;
   border: 0;
 }
+.video-wrap-placeholder {
+  padding-top: 0;
+  background: linear-gradient(180deg, var(--card) 0%, var(--bg-2) 100%);
+  border: 1px dashed rgba(200, 99, 58, 0.4);
+}
+.video-placeholder {
+  position: relative;
+  padding: 56px 36px;
+  text-align: center;
+}
+.video-placeholder-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 14px;
+  border: 1px solid rgba(200, 99, 58, 0.3);
+  border-radius: 999px;
+  background: rgba(200, 99, 58, 0.06);
+  margin-bottom: 18px;
+}
+.video-placeholder-pulse {
+  width: 7px;
+  height: 7px;
+  border-radius: 999px;
+  background: var(--accent);
+  animation: pulse 2s infinite;
+}
+.video-placeholder-title {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 400;
+  letter-spacing: -0.018em;
+  color: var(--ink);
+  margin: 0 0 12px;
+}
+.video-placeholder-sub {
+  max-width: 520px;
+  margin: 0 auto 22px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.gate-step-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.gate-step-disabled .gate-text em {
+  font-style: normal;
+  font-weight: 600;
+  color: var(--accent);
+  margin-left: 4px;
+}
+.gate-step-disabled:hover { border-color: var(--line); }
 .module-grid-2col {
   display: grid;
   grid-template-columns: 1.7fr 1fr;

@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<title>Find your idea · The Genesis Challenge</title>
+<meta name="description" content="No idea yet? Tell us a problem you run into and we'll generate three real things you could build with Claude Code in a 3-hour session — plus how to market each one." />
+<meta name="theme-color" content="#F0EEE6" />
+<link rel="canonical" href="https://itwasverygood.com/idea-generator.html" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" href="/favicon.svg" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="brand" aria-label="it was very good.">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+        <g fill="#C8633A">
+          <circle cx="16" cy="16" r="6"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(60 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(120 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(180 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(240 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(300 16 16)"/>
+        </g>
+      </svg>
+      <span class="brand-name"><span class="brand-accent">it</span>was<span class="brand-accent">very</span>good.</span>
+    </a>
+    <nav class="nav-links" aria-label="Primary">
+      <a href="index.html#challenge">The Challenge <span class="caret">›</span></a>
+      <a href="index.html#modules">Modules <span class="caret">›</span></a>
+      <a href="index.html#instructors">Instructors <span class="caret">›</span></a>
+      <a href="index.html#about">About <span class="caret">›</span></a>
+      <a href="index.html#pricing">Pricing <span class="caret">›</span></a>
+      <a href="blog.html">Blog <span class="caret">›</span></a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-ghost" href="login.html">Sign in</a>
+      <a class="btn btn-dark" href="login.html">Join the waitlist</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ LAUNCH DATE BANNER ============ -->
+<div class="launch-banner" role="status">
+  <div class="launch-banner-inner">
+    <span class="launch-banner-icon" aria-hidden="true">
+      <svg viewBox="0 0 32 32" width="18" height="18">
+        <g fill="currentColor">
+          <circle cx="16" cy="16" r="6"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(60 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(120 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(180 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(240 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(300 16 16)"/>
+        </g>
+      </svg>
+    </span>
+    <span class="launch-banner-text">
+      <strong>Doors open Tuesday, April&nbsp;14.</strong> The next cohort of The Genesis Challenge starts in <span class="launch-banner-countdown">5 days</span>.
+    </span>
+    <a href="login.html" class="launch-banner-cta">Join the waitlist →</a>
+  </div>
+</div>
+
+<!-- ============ IDEA GENERATOR ============ -->
+<section class="idea-hero">
+  <div class="idea-hero-inner">
+    <div class="hero-eyebrow"><span class="dot-pulse"></span> Free idea generator &middot; Powered by Claude</div>
+    <h1 class="idea-title">Don&rsquo;t have an idea yet? <span class="hi">Let&rsquo;s find one.</span></h1>
+    <p class="idea-sub">Tell us about a problem you run into in your everyday life. We&rsquo;ll give you three real things you could build with Claude Code in a 3-hour session &mdash; and how to actually market each one.</p>
+
+    <div class="idea-prompt-rotator" aria-hidden="true">
+      <span class="idea-prompt-label">Try something like</span>
+      <span class="idea-prompt-text" id="promptRotator">&ldquo;I&rsquo;m a pastor and every Sunday morning I scramble to find sermon illustrations.&rdquo;</span>
+    </div>
+
+    <form class="idea-form" id="ideaForm">
+      <label class="idea-label" for="problem">What&rsquo;s a problem you keep running into?</label>
+      <textarea
+        class="idea-textarea"
+        id="problem"
+        name="problem"
+        rows="5"
+        maxlength="1000"
+        placeholder="The more specific, the better. Where, when, who&rsquo;s involved, what makes it annoying."
+        required
+      ></textarea>
+      <div class="idea-form-row">
+        <span class="idea-counter" id="counter">0 / 1000</span>
+        <button type="submit" class="btn btn-dark" id="generateBtn">
+          <span class="idea-btn-label">Generate 3 ideas</span>
+        </button>
+      </div>
+      <p class="idea-fineprint">Free to use. We don&rsquo;t store what you type. Powered by Claude Sonnet 4.6.</p>
+    </form>
+
+    <div class="idea-status" id="status" hidden></div>
+  </div>
+</section>
+
+<!-- ============ RESULTS ============ -->
+<section class="idea-results" id="results" hidden>
+  <div class="idea-results-inner">
+    <div class="idea-results-header">
+      <p class="idea-results-eyebrow">Three things you could build</p>
+      <h2 class="idea-results-title">Pick the one that sparks something.</h2>
+    </div>
+    <div class="idea-card-grid" id="ideaCards"></div>
+
+    <div class="idea-cta-card">
+      <h3 class="idea-cta-title">Like one of these? Build it for real.</h3>
+      <p class="idea-cta-sub">The Genesis Challenge is a 3-hour build session that takes you from blank screen to a launched website, app, or online business. Cohort 01 opens Tuesday, April&nbsp;14.</p>
+      <div class="idea-cta-row">
+        <a href="login.html" class="btn btn-dark">Join the waitlist</a>
+        <button class="btn btn-ghost" type="button" id="regenBtn">Generate three more</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer" id="contact">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <a href="index.html" class="brand brand-light">
+        <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+          <g fill="#C8633A">
+            <circle cx="16" cy="16" r="6"/>
+            <rect x="14.7" y="1" width="2.6" height="5" rx="1.3"/>
+            <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(60 16 16)"/>
+            <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(120 16 16)"/>
+            <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(180 16 16)"/>
+            <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(240 16 16)"/>
+            <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(300 16 16)"/>
+          </g>
+        </svg>
+        <span class="brand-name"><span class="brand-accent">it</span>was<span class="brand-accent">very</span>good.</span>
+      </a>
+      <p class="footer-tag">Built by Christians, for Christians. Ship in three hours.</p>
+      <p class="footer-copy">&copy; 2026 The Genesis Challenge<br/>Soli Deo Gloria</p>
+    </div>
+  </div>
+</footer>
+
+<script type="module" src="idea-generator.js"></script>
+</body>
+</html>
