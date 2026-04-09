@@ -20,9 +20,46 @@ const counter = document.getElementById("counter");
 const generateBtn = document.getElementById("generateBtn");
 const btnLabel = generateBtn.querySelector(".idea-btn-label");
 const statusEl = document.getElementById("status");
+const loadingSection = document.getElementById("loading");
+const loadingSub = document.getElementById("loadingSub");
 const resultsSection = document.getElementById("results");
 const cardGrid = document.getElementById("ideaCards");
 const regenBtn = document.getElementById("regenBtn");
+
+// ---------- loading state ----------
+const LOADING_STEPS = [
+  "Reading what you wrote\u2026",
+  "Looking for the real pain underneath\u2026",
+  "Sketching three angles\u2026",
+  "Picking who'd actually buy each one\u2026",
+  "Finding the hooks that would stop them scrolling\u2026",
+  "Tightening the words\u2026",
+  "Almost there\u2026",
+];
+let loadingTimer = null;
+function startLoading() {
+  let i = 0;
+  loadingSub.textContent = LOADING_STEPS[0];
+  loadingSection.hidden = false;
+  setTimeout(() => {
+    loadingSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  }, 60);
+  loadingTimer = setInterval(() => {
+    i = (i + 1) % LOADING_STEPS.length;
+    loadingSub.style.opacity = "0";
+    setTimeout(() => {
+      loadingSub.textContent = LOADING_STEPS[i];
+      loadingSub.style.opacity = "1";
+    }, 200);
+  }, 2200);
+}
+function stopLoading() {
+  if (loadingTimer) {
+    clearInterval(loadingTimer);
+    loadingTimer = null;
+  }
+  loadingSection.hidden = true;
+}
 
 // ---------- rotating prompts ----------
 let promptIdx = 0;
@@ -77,11 +114,20 @@ function renderIdeas(ideas) {
 
       <div class="idea-card-section">
         <p class="idea-card-section-label">How to market it</p>
-        <ul class="idea-card-marketing">
-          <li><strong>Audience:</strong> ${escapeHtml(idea.marketing?.audience || "")}</li>
-          <li><strong>Where to find them:</strong> ${escapeHtml(idea.marketing?.where_to_find_them || "")}</li>
-          <li><strong>The hook:</strong> &ldquo;${escapeHtml(idea.marketing?.the_hook || "")}&rdquo;</li>
-        </ul>
+        <div class="idea-card-marketing">
+          <div class="market-block">
+            <p class="market-label">Audience</p>
+            <p class="market-body">${escapeHtml(idea.marketing?.audience || "")}</p>
+          </div>
+          <div class="market-block">
+            <p class="market-label">Where to find them</p>
+            <p class="market-body">${escapeHtml(idea.marketing?.where_to_find_them || "")}</p>
+          </div>
+          <div class="market-block">
+            <p class="market-label">The hook</p>
+            <p class="market-body market-hook">&ldquo;${escapeHtml(idea.marketing?.the_hook || "")}&rdquo;</p>
+          </div>
+        </div>
       </div>
     `;
     cardGrid.appendChild(card);
@@ -112,9 +158,11 @@ async function generate() {
   }
 
   clearStatus();
+  resultsSection.hidden = true;
   generateBtn.disabled = true;
   btnLabel.textContent = "Generating\u2026";
   generateBtn.classList.add("is-loading");
+  startLoading();
 
   try {
     const res = await fetch("/api/generate-ideas", {
@@ -139,6 +187,7 @@ async function generate() {
     console.error(err);
     showStatus("Network error. Please check your connection and try again.", "error");
   } finally {
+    stopLoading();
     generateBtn.disabled = false;
     btnLabel.textContent = "Generate 3 ideas";
     generateBtn.classList.remove("is-loading");
