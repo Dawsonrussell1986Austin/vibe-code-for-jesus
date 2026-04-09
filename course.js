@@ -1,5 +1,5 @@
 // =============================================================================
-// Vibe Code for Jesus — course.js
+// The Genesis Challenge — course.js
 // Hash-routed single-page course app: dashboard, module list, module viewer,
 // live Q&A, community, account. Uses auth.js for user state.
 // =============================================================================

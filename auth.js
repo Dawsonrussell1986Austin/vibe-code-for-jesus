@@ -1,5 +1,5 @@
 // =============================================================================
-// Vibe Code for Jesus — auth.js
+// The Genesis Challenge — auth.js
 // Handles Google OAuth + email magic link via Supabase, with a graceful
 // localStorage demo fallback so the course works locally without any setup.
 //
