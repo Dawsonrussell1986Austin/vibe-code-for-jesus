@@ -1,0 +1,819 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Admin · it was very good.</title>
+<meta name="theme-color" content="#F0EEE6" />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,300;6..72,400;6..72,500;6..72,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="styles.css" />
+<link rel="stylesheet" href="course-styles.css" />
+<style>
+  /* ------------ Admin dashboard styles ------------ */
+  .admin-body {
+    background: var(--bg, #F0EEE6);
+    color: var(--ink, #1a1a1a);
+    min-height: 100vh;
+  }
+
+  .admin-shell {
+    max-width: 1120px;
+    margin: 0 auto;
+    padding: 32px 24px 96px;
+  }
+
+  .admin-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line, rgba(0,0,0,0.12));
+    margin-bottom: 28px;
+  }
+  .admin-topbar .brand { text-decoration: none; }
+  .admin-topbar-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .admin-topbar-right .meta {
+    font-size: 12px;
+    color: rgba(0,0,0,0.55);
+    margin-right: 6px;
+  }
+
+  .admin-header-block { margin-bottom: 22px; }
+  .admin-eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #C8633A;
+    font-weight: 600;
+    margin: 0 0 6px;
+  }
+  .admin-h1 {
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.1;
+    margin: 0 0 6px;
+  }
+  .admin-sub {
+    margin: 0;
+    color: rgba(0,0,0,0.6);
+    font-size: 14px;
+  }
+
+  .admin-panel {
+    background: #fff;
+    border: 1px solid var(--line, rgba(0,0,0,0.1));
+    border-radius: 14px;
+    padding: 22px 22px 24px;
+    margin-bottom: 22px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+  }
+  .admin-panel-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 14px;
+    flex-wrap: wrap;
+  }
+  .admin-panel h2 {
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 500;
+    font-size: 22px;
+    margin: 0;
+  }
+  .admin-panel .panel-help {
+    font-size: 12.5px;
+    color: rgba(0,0,0,0.55);
+    margin: 0;
+  }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+  }
+  .metric-card {
+    background: #FAF8F1;
+    border: 1px solid var(--line, rgba(0,0,0,0.08));
+    border-radius: 12px;
+    padding: 16px 16px 18px;
+  }
+  .metric-card.is-muted {
+    background: #F4F2EB;
+    opacity: 0.72;
+  }
+  .metric-label {
+    font-size: 11.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.55);
+    margin: 0 0 6px;
+  }
+  .metric-value {
+    font-family: "Newsreader", Georgia, serif;
+    font-weight: 500;
+    font-size: 34px;
+    line-height: 1.05;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+  .metric-sub {
+    font-size: 12px;
+    color: rgba(0,0,0,0.55);
+    margin: 0;
+  }
+
+  .admin-table-wrap { overflow-x: auto; }
+  .admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+  }
+  .admin-table th,
+  .admin-table td {
+    text-align: left;
+    padding: 11px 12px;
+    border-bottom: 1px solid var(--line, rgba(0,0,0,0.08));
+    vertical-align: middle;
+  }
+  .admin-table th {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.55);
+    font-weight: 600;
+    background: #FAF8F1;
+  }
+  .admin-table td.email { font-family: "Inter", sans-serif; }
+  .admin-table tr:last-child td { border-bottom: none; }
+
+  .status-pill {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #EAF4EC;
+    color: #1f6b34;
+  }
+  .status-pill.is-unsub { background: #FBECEC; color: #8a1f1f; }
+  .status-pill.is-pending { background: #FFF4DB; color: #7a5a00; }
+  .status-pill.is-cleaned { background: #EEEEEE; color: #555; }
+
+  .tag-chip {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 8px;
+    border-radius: 999px;
+    background: #F0EEE6;
+    border: 1px solid var(--line, rgba(0,0,0,0.1));
+    color: #333;
+    margin-right: 4px;
+  }
+
+  .admin-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn-small {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    border-radius: 10px;
+    border: 1px solid var(--line, rgba(0,0,0,0.15));
+    background: #fff;
+    color: inherit;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background .15s ease, border-color .15s ease, transform .05s ease;
+  }
+  .btn-small:hover { background: #FAF8F1; }
+  .btn-small:active { transform: translateY(1px); }
+  .btn-small.is-primary {
+    background: #1a1a1a;
+    color: #fff;
+    border-color: #1a1a1a;
+  }
+  .btn-small.is-primary:hover { background: #2b2b2b; }
+  .btn-small[disabled] { opacity: 0.55; cursor: not-allowed; }
+
+  .admin-error {
+    background: #FBECEC;
+    border: 1px solid #f2c4c4;
+    color: #8a1f1f;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+  .admin-loading {
+    font-size: 14px;
+    color: rgba(0,0,0,0.55);
+    font-style: italic;
+  }
+
+  .admin-footnote {
+    margin-top: 22px;
+    font-size: 13px;
+    color: rgba(0,0,0,0.55);
+    line-height: 1.55;
+  }
+  .admin-footnote a { color: #C8633A; }
+
+  .velocity-row {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .tag-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .tag-list .tag-chip {
+    font-size: 13px;
+    padding: 5px 12px;
+  }
+  .tag-list .tag-chip strong { margin-left: 6px; color: #1a1a1a; }
+
+  /* Gate (password card) reuses auth-shell / auth-card from styles.css */
+  #gate { display: none; }
+  #gate.is-visible { display: block; }
+
+  @media (max-width: 900px) {
+    .metric-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .velocity-row { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .admin-h1 { font-size: 28px; }
+  }
+  @media (max-width: 600px) {
+    .admin-shell { padding: 22px 16px 80px; }
+    .admin-topbar { flex-direction: column; align-items: flex-start; }
+    .admin-topbar-right { width: 100%; justify-content: flex-start; }
+    .admin-panel { padding: 18px 16px 20px; border-radius: 12px; }
+    .admin-panel h2 { font-size: 19px; }
+    .metric-value { font-size: 28px; }
+    .velocity-row { grid-template-columns: 1fr; }
+    .admin-table th, .admin-table td { padding: 10px 10px; font-size: 13px; }
+  }
+  @media (max-width: 420px) {
+    .metric-grid { grid-template-columns: 1fr; }
+    .admin-h1 { font-size: 24px; }
+    .metric-value { font-size: 26px; }
+  }
+</style>
+</head>
+<body class="admin-body">
+
+<!-- =================================================================== -->
+<!-- PASSWORD GATE                                                       -->
+<!-- =================================================================== -->
+<div class="auth-shell" id="gate">
+  <a href="/" class="brand auth-brand">
+    <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true">
+      <g fill="#C8633A">
+        <circle cx="16" cy="16" r="6"/>
+        <rect x="14.7" y="1" width="2.6" height="5" rx="1.3"/>
+        <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(60 16 16)"/>
+        <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(120 16 16)"/>
+        <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(180 16 16)"/>
+        <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(240 16 16)"/>
+        <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(300 16 16)"/>
+      </g>
+    </svg>
+    <span class="brand-name"><span class="brand-accent">it</span>was<span class="brand-accent">very</span>good.</span>
+  </a>
+
+  <div class="auth-card">
+    <p class="auth-eyebrow">Admin dashboard</p>
+    <h1 class="auth-title">Sign in.</h1>
+    <p class="auth-sub">Enter the admin password to view live metrics.</p>
+
+    <form id="gateForm" class="auth-form" novalidate>
+      <label class="auth-label" for="pw">Password</label>
+      <input class="input" id="pw" name="pw" type="password" placeholder="••••••••" autocomplete="current-password" required />
+      <button class="btn btn-dark btn-block" type="submit" id="gateBtn">Unlock dashboard</button>
+    </form>
+
+    <div class="auth-status" id="gateStatus" hidden></div>
+
+    <p class="auth-fineprint">
+      This page is private. If you don't have the password, head <a href="/">back home</a>.
+    </p>
+  </div>
+</div>
+
+<!-- =================================================================== -->
+<!-- DASHBOARD                                                           -->
+<!-- =================================================================== -->
+<main class="admin-shell" id="dash" hidden>
+  <header class="admin-topbar">
+    <a href="/" class="brand">
+      <svg class="brand-mark" viewBox="0 0 32 32" aria-hidden="true" width="26" height="26">
+        <g fill="#C8633A">
+          <circle cx="16" cy="16" r="6"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(60 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(120 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(180 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(240 16 16)"/>
+          <rect x="14.7" y="1" width="2.6" height="5" rx="1.3" transform="rotate(300 16 16)"/>
+        </g>
+      </svg>
+      <span class="brand-name"><span class="brand-accent">it</span>was<span class="brand-accent">very</span>good.</span>
+    </a>
+
+    <div class="admin-topbar-right">
+      <span class="meta">Updated <span id="updatedAt">—</span></span>
+      <button class="btn-small" id="refreshBtn" type="button">Refresh</button>
+      <button class="btn-small" id="logoutBtn" type="button">Sign out</button>
+    </div>
+  </header>
+
+  <div class="admin-header-block">
+    <p class="admin-eyebrow">Live metrics</p>
+    <h1 class="admin-h1">Dashboard</h1>
+    <p class="admin-sub">Real-time audience, velocity, and revenue for itwasverygood.com.</p>
+  </div>
+
+  <div id="errorBox" class="admin-error" hidden></div>
+
+  <!-- Key audience metrics -->
+  <section class="admin-panel">
+    <div class="admin-panel-head">
+      <h2>Audience</h2>
+      <p class="panel-help">Live from Mailchimp</p>
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card">
+        <p class="metric-label">Total opt-ins</p>
+        <p class="metric-value" id="kpiMembers">—</p>
+        <p class="metric-sub">All sources, all statuses</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Subscribed</p>
+        <p class="metric-value" id="kpiSubscribed">—</p>
+        <p class="metric-sub">Active subscribers</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Waitlist</p>
+        <p class="metric-value" id="kpiWaitlist">—</p>
+        <p class="metric-sub">Tagged <code>waitlist</code></p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Idea generator</p>
+        <p class="metric-value" id="kpiIdea">—</p>
+        <p class="metric-sub">Tagged <code>idea-generator</code></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Velocity -->
+  <section class="admin-panel">
+    <div class="admin-panel-head">
+      <h2>Signup velocity</h2>
+      <p class="panel-help">How fast the list is growing</p>
+    </div>
+    <div class="velocity-row">
+      <div class="metric-card">
+        <p class="metric-label">Last 24 hours</p>
+        <p class="metric-value" id="kpi24h">—</p>
+        <p class="metric-sub">New opt-ins</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Last 7 days</p>
+        <p class="metric-value" id="kpi7d">—</p>
+        <p class="metric-sub">New opt-ins</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Last 30 days</p>
+        <p class="metric-value" id="kpi30d">—</p>
+        <p class="metric-sub">New opt-ins</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Traffic & conversion -->
+  <section class="admin-panel">
+    <div class="admin-panel-head">
+      <h2>Traffic &amp; conversion</h2>
+      <p class="panel-help">Requires Vercel Analytics</p>
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card is-muted">
+        <p class="metric-label">Visitors (30d)</p>
+        <p class="metric-value">—</p>
+        <p class="metric-sub">Enable <a href="https://vercel.com/docs/analytics" target="_blank" rel="noopener">Vercel Analytics</a></p>
+      </div>
+      <div class="metric-card is-muted">
+        <p class="metric-label">Pageviews (30d)</p>
+        <p class="metric-value">—</p>
+        <p class="metric-sub">From Vercel Analytics</p>
+      </div>
+      <div class="metric-card is-muted">
+        <p class="metric-label">Conversion rate</p>
+        <p class="metric-value">—</p>
+        <p class="metric-sub">Opt-ins ÷ visitors</p>
+      </div>
+      <div class="metric-card is-muted">
+        <p class="metric-label">Top source</p>
+        <p class="metric-value" style="font-size:20px">—</p>
+        <p class="metric-sub">Referrer breakdown</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Tag breakdown -->
+  <section class="admin-panel">
+    <div class="admin-panel-head">
+      <h2>Tag breakdown</h2>
+      <p class="panel-help">Every capture source</p>
+    </div>
+    <div id="tagList" class="tag-list">
+      <p class="admin-loading">Loading tags…</p>
+    </div>
+  </section>
+
+  <!-- Recent signups -->
+  <section class="admin-panel">
+    <div class="admin-panel-head">
+      <h2>Recent signups</h2>
+      <p class="panel-help">Newest 25</p>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Source</th>
+            <th>Status</th>
+            <th>Joined</th>
+          </tr>
+        </thead>
+        <tbody id="recentBody">
+          <tr><td colspan="4" class="admin-loading">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Full waitlist emails -->
+  <section class="admin-panel">
+    <div class="admin-panel-head">
+      <div>
+        <h2>Full waitlist</h2>
+        <p class="panel-help">Everyone on the list, newest first</p>
+      </div>
+      <div class="admin-actions">
+        <button class="btn-small" id="copyBtn" type="button">Copy emails</button>
+        <button class="btn-small is-primary" id="csvBtn" type="button">Download CSV</button>
+      </div>
+    </div>
+    <div class="admin-table-wrap">
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Email</th>
+            <th>Source</th>
+            <th>Status</th>
+            <th>Joined</th>
+          </tr>
+        </thead>
+        <tbody id="allBody">
+          <tr><td colspan="4" class="admin-loading">Loading…</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Revenue (coming soon) -->
+  <section class="admin-panel">
+    <div class="admin-panel-head">
+      <h2>Revenue &amp; product</h2>
+      <p class="panel-help">Coming soon — Stripe integration pending</p>
+    </div>
+    <div class="metric-grid">
+      <div class="metric-card is-muted">
+        <p class="metric-label">MRR</p>
+        <p class="metric-value">$—</p>
+        <p class="metric-sub">Monthly recurring</p>
+      </div>
+      <div class="metric-card is-muted">
+        <p class="metric-label">Free trials</p>
+        <p class="metric-value">—</p>
+        <p class="metric-sub">Trial users</p>
+      </div>
+      <div class="metric-card is-muted">
+        <p class="metric-label">Active students</p>
+        <p class="metric-value">—</p>
+        <p class="metric-sub">Enrolled this round</p>
+      </div>
+      <div class="metric-card is-muted">
+        <p class="metric-label">Revenue (all-time)</p>
+        <p class="metric-value">$—</p>
+        <p class="metric-sub">Gross since launch</p>
+      </div>
+    </div>
+  </section>
+
+  <p class="admin-footnote">
+    <strong>Next steps to light up the rest of this dashboard:</strong><br />
+    1. Enable <a href="https://vercel.com/docs/analytics" target="_blank" rel="noopener">Vercel Analytics</a> for visitor + conversion data.<br />
+    2. Connect Stripe and add a <code>/api/admin/revenue</code> endpoint for MRR + trials + revenue.<br />
+    3. This page is gated by the <code>ADMIN_PASSWORD</code> env var in Vercel → Settings → Environment Variables.
+  </p>
+</main>
+
+<script>
+(function () {
+  var PW_KEY = 'ivwg_admin_pw';
+
+  var gate = document.getElementById('gate');
+  var dash = document.getElementById('dash');
+  var gateForm = document.getElementById('gateForm');
+  var pwInput = document.getElementById('pw');
+  var gateBtn = document.getElementById('gateBtn');
+  var gateStatus = document.getElementById('gateStatus');
+  var refreshBtn = document.getElementById('refreshBtn');
+  var logoutBtn = document.getElementById('logoutBtn');
+  var errorBox = document.getElementById('errorBox');
+  var updatedAt = document.getElementById('updatedAt');
+  var csvBtn = document.getElementById('csvBtn');
+  var copyBtn = document.getElementById('copyBtn');
+
+  var state = { data: null };
+
+  function showGate(msg, kind) {
+    dash.hidden = true;
+    gate.classList.add('is-visible');
+    if (msg) {
+      gateStatus.hidden = false;
+      gateStatus.className = 'auth-status auth-status-' + (kind || 'error');
+      gateStatus.textContent = msg;
+    } else {
+      gateStatus.hidden = true;
+      gateStatus.textContent = '';
+    }
+    setTimeout(function () { pwInput.focus(); }, 50);
+  }
+  function hideGate() {
+    gate.classList.remove('is-visible');
+    gate.style.display = 'none';
+    dash.hidden = false;
+  }
+  function showError(msg) {
+    if (!msg) { errorBox.hidden = true; errorBox.textContent = ''; return; }
+    errorBox.hidden = false;
+    errorBox.textContent = msg;
+  }
+  function fmt(n) {
+    if (n === undefined || n === null || Number.isNaN(Number(n))) return '—';
+    return Number(n).toLocaleString('en-US');
+  }
+  function fmtDate(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return '—';
+    return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+  }
+  function fmtDateTime(iso) {
+    if (!iso) return '—';
+    var d = new Date(iso);
+    if (isNaN(d.getTime())) return '—';
+    return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' });
+  }
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+  function statusPill(status) {
+    var cls = 'status-pill';
+    if (status === 'unsubscribed') cls += ' is-unsub';
+    else if (status === 'pending') cls += ' is-pending';
+    else if (status === 'cleaned') cls += ' is-cleaned';
+    return '<span class="' + cls + '">' + escapeHtml(status || '—') + '</span>';
+  }
+  function tagCell(tagStr) {
+    if (!tagStr || tagStr === '—') return '<span class="metric-sub">—</span>';
+    return tagStr
+      .split(',')
+      .map(function (t) { return '<span class="tag-chip">' + escapeHtml(t.trim()) + '</span>'; })
+      .join('');
+  }
+
+  function renderRows(tbody, rows) {
+    if (!rows || !rows.length) {
+      tbody.innerHTML = '<tr><td colspan="4" class="admin-loading">No signups yet.</td></tr>';
+      return;
+    }
+    tbody.innerHTML = rows
+      .map(function (r) {
+        return (
+          '<tr>' +
+            '<td class="email">' + escapeHtml(r.email || '') + '</td>' +
+            '<td>' + tagCell(r.tags) + '</td>' +
+            '<td>' + statusPill(r.status) + '</td>' +
+            '<td>' + escapeHtml(fmtDateTime(r.joined)) + '</td>' +
+          '</tr>'
+        );
+      })
+      .join('');
+  }
+
+  function renderTagBreakdown(tags) {
+    var el = document.getElementById('tagList');
+    var keys = Object.keys(tags || {});
+    if (!keys.length) {
+      el.innerHTML = '<p class="metric-sub">No tags yet.</p>';
+      return;
+    }
+    keys.sort(function (a, b) { return (tags[b] || 0) - (tags[a] || 0); });
+    el.innerHTML = keys
+      .map(function (k) {
+        return '<span class="tag-chip">' + escapeHtml(k) + ' <strong>' + fmt(tags[k]) + '</strong></span>';
+      })
+      .join('');
+  }
+
+  function renderDashboard(data) {
+    state.data = data;
+    showError(null);
+
+    document.getElementById('kpiMembers').textContent    = fmt(data.totals && data.totals.members);
+    document.getElementById('kpiSubscribed').textContent = fmt(data.totals && data.totals.subscribed);
+    document.getElementById('kpiWaitlist').textContent   = fmt(data.totals && data.totals.waitlist);
+    document.getElementById('kpiIdea').textContent       = fmt(data.totals && data.totals.ideaGenerator);
+
+    document.getElementById('kpi24h').textContent = fmt(data.velocity && data.velocity.last24h);
+    document.getElementById('kpi7d').textContent  = fmt(data.velocity && data.velocity.last7d);
+    document.getElementById('kpi30d').textContent = fmt(data.velocity && data.velocity.last30d);
+
+    renderTagBreakdown(data.tagBreakdown || {});
+    renderRows(document.getElementById('recentBody'), data.recent || []);
+    renderRows(document.getElementById('allBody'), data.all || []);
+
+    updatedAt.textContent = fmtDateTime(data.ts || new Date().toISOString());
+  }
+
+  async function loadStats(password) {
+    try {
+      refreshBtn && refreshBtn.setAttribute('disabled', 'disabled');
+      var res = await fetch('/api/admin/stats', {
+        headers: { Authorization: 'Bearer ' + password },
+        cache: 'no-store'
+      });
+
+      if (res.status === 401) {
+        try { sessionStorage.removeItem(PW_KEY); } catch (_) {}
+        showGate('Password incorrect. Try again.', 'error');
+        return false;
+      }
+
+      var data = {};
+      try { data = await res.json(); } catch (_) {}
+
+      if (!res.ok) {
+        showError(data.error || ('Request failed: ' + res.status));
+        // Show dashboard shell even if data fetch failed, so user can see error + retry.
+        hideGate();
+        return false;
+      }
+
+      hideGate();
+      renderDashboard(data);
+      return true;
+    } catch (err) {
+      showError('Network error: ' + (err && err.message ? err.message : 'unknown'));
+      return false;
+    } finally {
+      refreshBtn && refreshBtn.removeAttribute('disabled');
+    }
+  }
+
+  // ---------- Gate form submit ----------
+  gateForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+    var pw = pwInput.value || '';
+    if (!pw) { showGate('Please enter the password.', 'error'); return; }
+    gateBtn.disabled = true;
+    var origLabel = gateBtn.textContent;
+    gateBtn.textContent = 'Checking…';
+    try { sessionStorage.setItem(PW_KEY, pw); } catch (_) {}
+    var ok = await loadStats(pw);
+    gateBtn.disabled = false;
+    gateBtn.textContent = origLabel;
+    if (!ok) {
+      // stay on gate — loadStats already showed message
+    }
+  });
+
+  // ---------- Refresh ----------
+  refreshBtn.addEventListener('click', function () {
+    var pw = '';
+    try { pw = sessionStorage.getItem(PW_KEY) || ''; } catch (_) {}
+    if (!pw) { showGate('Session expired. Please sign in again.', 'info'); return; }
+    loadStats(pw);
+  });
+
+  // ---------- Sign out ----------
+  logoutBtn.addEventListener('click', function () {
+    try { sessionStorage.removeItem(PW_KEY); } catch (_) {}
+    state.data = null;
+    showError(null);
+    showGate(null);
+    pwInput.value = '';
+  });
+
+  // ---------- CSV download ----------
+  csvBtn.addEventListener('click', function () {
+    if (!state.data || !state.data.all || !state.data.all.length) {
+      alert('No data to export yet.');
+      return;
+    }
+    var rows = [['email', 'tags', 'status', 'joined']];
+    state.data.all.forEach(function (r) {
+      rows.push([
+        r.email || '',
+        (r.tags || '').replace(/,/g, ';'),
+        r.status || '',
+        r.joined || ''
+      ]);
+    });
+    var csv = rows
+      .map(function (row) {
+        return row
+          .map(function (cell) {
+            var s = String(cell == null ? '' : cell);
+            if (/[",\n]/.test(s)) s = '"' + s.replace(/"/g, '""') + '"';
+            return s;
+          })
+          .join(',');
+      })
+      .join('\n');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    var stamp = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = 'itwasverygood-waitlist-' + stamp + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // ---------- Copy all emails ----------
+  copyBtn.addEventListener('click', async function () {
+    if (!state.data || !state.data.all || !state.data.all.length) {
+      alert('No emails to copy yet.');
+      return;
+    }
+    var text = state.data.all.map(function (r) { return r.email; }).filter(Boolean).join('\n');
+    try {
+      await navigator.clipboard.writeText(text);
+      var orig = copyBtn.textContent;
+      copyBtn.textContent = 'Copied ' + state.data.all.length + ' ✓';
+      setTimeout(function () { copyBtn.textContent = orig; }, 1600);
+    } catch (_) {
+      alert('Could not copy to clipboard.');
+    }
+  });
+
+  // ---------- Boot ----------
+  (function boot() {
+    var pw = '';
+    try { pw = sessionStorage.getItem(PW_KEY) || ''; } catch (_) {}
+    if (pw) {
+      loadStats(pw);
+    } else {
+      showGate(null);
+    }
+  })();
+})();
+</script>
+</body>
+</html>

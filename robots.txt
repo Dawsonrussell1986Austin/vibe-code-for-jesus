@@ -4,5 +4,7 @@ Allow: /
 # Don't waste crawl budget on the gated app surface
 Disallow: /course.html
 Disallow: /login.html
+Disallow: /admin
+Disallow: /admin.html
 
 Sitemap: https://itwasverygood.com/sitemap.xml
