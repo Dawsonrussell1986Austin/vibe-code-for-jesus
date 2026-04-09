@@ -257,6 +257,88 @@
   }
   .tag-list .tag-chip strong { margin-left: 6px; color: #1a1a1a; }
 
+  /* Idea Generator submission cards */
+  .idea-sub {
+    border: 1px solid var(--line, rgba(0,0,0,0.1));
+    border-radius: 12px;
+    padding: 16px 18px 14px;
+    margin-bottom: 12px;
+    background: #FAF8F1;
+  }
+  .idea-sub-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 11.5px;
+    color: rgba(0,0,0,0.55);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin: 0 0 8px;
+  }
+  .idea-sub-meta .idea-id {
+    font-family: "Inter", monospace, sans-serif;
+    text-transform: none;
+    letter-spacing: 0;
+    color: rgba(0,0,0,0.4);
+  }
+  .idea-sub-problem {
+    font-family: "Newsreader", Georgia, serif;
+    font-size: 17px;
+    line-height: 1.45;
+    color: #1a1a1a;
+    margin: 0 0 10px;
+    white-space: pre-wrap;
+  }
+  .idea-sub-outputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 6px;
+  }
+  .idea-sub-out {
+    background: #fff;
+    border: 1px solid var(--line, rgba(0,0,0,0.1));
+    border-radius: 999px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: #333;
+  }
+  .idea-sub-out strong { color: #C8633A; font-weight: 600; }
+  .idea-sub details { margin-top: 10px; font-size: 13px; }
+  .idea-sub details summary {
+    cursor: pointer;
+    color: #C8633A;
+    font-weight: 600;
+    list-style: none;
+  }
+  .idea-sub details summary::-webkit-details-marker { display: none; }
+  .idea-sub details[open] summary { margin-bottom: 8px; }
+  .idea-sub-full {
+    display: grid;
+    gap: 12px;
+    padding: 8px 0 2px;
+  }
+  .idea-sub-full .idea-one {
+    border-top: 1px dashed var(--line, rgba(0,0,0,0.12));
+    padding-top: 10px;
+  }
+  .idea-sub-full .idea-one:first-child { border-top: none; padding-top: 0; }
+  .idea-sub-full .io-label {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(0,0,0,0.5);
+    margin: 6px 0 2px;
+  }
+  .idea-sub-full .io-body {
+    font-size: 13px;
+    color: #2a2a2a;
+    margin: 0 0 4px;
+    line-height: 1.5;
+  }
+
   /* Gate (password card) reuses auth-shell / auth-card from styles.css */
   #gate { display: none; }
   #gate.is-visible { display: block; }
@@ -503,6 +585,41 @@
           <tr><td colspan="4" class="admin-loading">Loading…</td></tr>
         </tbody>
       </table>
+    </div>
+  </section>
+
+  <!-- Idea Generator submissions -->
+  <section class="admin-panel">
+    <div class="admin-panel-head">
+      <div>
+        <h2>Idea Generator submissions</h2>
+        <p class="panel-help" id="ideasHelp">What people are typing into /idea-generator</p>
+      </div>
+      <div class="admin-actions">
+        <button class="btn-small" id="ideasRefreshBtn" type="button">Refresh</button>
+        <button class="btn-small is-primary" id="ideasCsvBtn" type="button">Download CSV</button>
+      </div>
+    </div>
+    <div class="metric-grid" style="grid-template-columns: repeat(3, minmax(0, 1fr)); margin-bottom: 16px;">
+      <div class="metric-card">
+        <p class="metric-label">Total ever</p>
+        <p class="metric-value" id="kpiIdeasTotal">—</p>
+        <p class="metric-sub">All-time submissions</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Loaded</p>
+        <p class="metric-value" id="kpiIdeasLoaded">—</p>
+        <p class="metric-sub">Most recent in view</p>
+      </div>
+      <div class="metric-card">
+        <p class="metric-label">Storage</p>
+        <p class="metric-value" id="kpiIdeasStorage" style="font-size:20px">—</p>
+        <p class="metric-sub">Upstash Redis</p>
+      </div>
+    </div>
+    <div id="ideasNotConfigured" class="admin-error" hidden></div>
+    <div id="ideasList">
+      <p class="admin-loading">Loading submissions…</p>
     </div>
   </section>
 
@@ -802,6 +919,162 @@
       alert('Could not copy to clipboard.');
     }
   });
+
+  // ---------- Idea Generator submissions ----------
+  var ideasState = { data: null };
+  var ideasListEl = document.getElementById('ideasList');
+  var ideasNotConfigEl = document.getElementById('ideasNotConfigured');
+  var ideasRefreshBtn = document.getElementById('ideasRefreshBtn');
+  var ideasCsvBtn = document.getElementById('ideasCsvBtn');
+  var kpiIdeasTotal = document.getElementById('kpiIdeasTotal');
+  var kpiIdeasLoaded = document.getElementById('kpiIdeasLoaded');
+  var kpiIdeasStorage = document.getElementById('kpiIdeasStorage');
+
+  function renderIdeaSubmissions(data) {
+    ideasState.data = data;
+    kpiIdeasTotal.textContent  = fmt(data && data.count);
+    kpiIdeasLoaded.textContent = fmt(data && data.returned);
+    kpiIdeasStorage.textContent = data && data.configured ? 'Connected' : 'Not set up';
+
+    if (!data || !data.configured) {
+      ideasNotConfigEl.hidden = false;
+      ideasNotConfigEl.innerHTML =
+        '<strong>Idea storage isn\'t connected yet.</strong><br />' +
+        'Connect Upstash Redis via <em>Vercel → Storage → Marketplace → Redis</em>, ' +
+        'then redeploy. Submissions will start appearing here automatically.';
+      ideasListEl.innerHTML = '';
+      return;
+    }
+
+    ideasNotConfigEl.hidden = true;
+
+    var items = (data && data.submissions) || [];
+    if (!items.length) {
+      ideasListEl.innerHTML = '<p class="metric-sub">No submissions stored yet. Once people use the Idea Generator, they\'ll show up here.</p>';
+      return;
+    }
+
+    ideasListEl.innerHTML = items.map(function (s) {
+      var ideas = Array.isArray(s.ideas) ? s.ideas : [];
+      var chips = ideas.map(function (i) {
+        return '<span class="idea-sub-out"><strong>' + escapeHtml(i.name || 'Untitled') + '</strong></span>';
+      }).join('');
+      var full = ideas.map(function (i) {
+        var marketing = i.marketing || {};
+        return (
+          '<div class="idea-one">' +
+            '<p class="io-label">' + escapeHtml(i.name || '') + ' — ' + escapeHtml(i.tagline || '') + '</p>' +
+            '<p class="io-body">' + escapeHtml(i.what_it_does || '') + '</p>' +
+            '<p class="io-label">First build</p>' +
+            '<p class="io-body">' + escapeHtml(i.build_first || '') + '</p>' +
+            '<p class="io-label">Audience</p>' +
+            '<p class="io-body">' + escapeHtml(marketing.audience || '') + '</p>' +
+            '<p class="io-label">Where to find them</p>' +
+            '<p class="io-body">' + escapeHtml(marketing.where_to_find_them || '') + '</p>' +
+            '<p class="io-label">The hook</p>' +
+            '<p class="io-body">' + escapeHtml(marketing.the_hook || '') + '</p>' +
+          '</div>'
+        );
+      }).join('');
+      return (
+        '<div class="idea-sub">' +
+          '<p class="idea-sub-meta">' +
+            '<span>' + escapeHtml(fmtDateTime(s.ts)) + '</span>' +
+            '<span class="idea-id">' + escapeHtml((s.id || '').slice(0, 8)) + '</span>' +
+          '</p>' +
+          '<p class="idea-sub-problem">' + escapeHtml(s.problem || '') + '</p>' +
+          '<div class="idea-sub-outputs">' + chips + '</div>' +
+          (ideas.length
+            ? '<details><summary>View all 3 full ideas</summary><div class="idea-sub-full">' + full + '</div></details>'
+            : ''
+          ) +
+        '</div>'
+      );
+    }).join('');
+  }
+
+  async function loadIdeas(password) {
+    try {
+      ideasRefreshBtn.setAttribute('disabled', 'disabled');
+      var res = await fetch('/api/admin/ideas?limit=100', {
+        headers: { Authorization: 'Bearer ' + password },
+        cache: 'no-store'
+      });
+      if (res.status === 401) {
+        try { sessionStorage.removeItem(PW_KEY); } catch (_) {}
+        showGate('Password incorrect. Try again.', 'error');
+        return;
+      }
+      var data = {};
+      try { data = await res.json(); } catch (_) {}
+      if (!res.ok) {
+        ideasListEl.innerHTML =
+          '<div class="admin-error">' + escapeHtml(data.error || 'Could not load submissions.') + '</div>';
+        return;
+      }
+      renderIdeaSubmissions(data);
+    } catch (err) {
+      ideasListEl.innerHTML =
+        '<div class="admin-error">Network error: ' + escapeHtml((err && err.message) || 'unknown') + '</div>';
+    } finally {
+      ideasRefreshBtn.removeAttribute('disabled');
+    }
+  }
+
+  ideasRefreshBtn.addEventListener('click', function () {
+    var pw = '';
+    try { pw = sessionStorage.getItem(PW_KEY) || ''; } catch (_) {}
+    if (!pw) { showGate('Session expired. Please sign in again.', 'info'); return; }
+    loadIdeas(pw);
+  });
+
+  ideasCsvBtn.addEventListener('click', function () {
+    var data = ideasState.data;
+    if (!data || !data.submissions || !data.submissions.length) {
+      alert('No submissions to export yet.');
+      return;
+    }
+    var rows = [['id', 'ts', 'problem', 'idea_1_name', 'idea_1_tagline', 'idea_2_name', 'idea_2_tagline', 'idea_3_name', 'idea_3_tagline']];
+    data.submissions.forEach(function (s) {
+      var i = s.ideas || [];
+      rows.push([
+        s.id || '',
+        s.ts || '',
+        s.problem || '',
+        (i[0] && i[0].name) || '', (i[0] && i[0].tagline) || '',
+        (i[1] && i[1].name) || '', (i[1] && i[1].tagline) || '',
+        (i[2] && i[2].name) || '', (i[2] && i[2].tagline) || ''
+      ]);
+    });
+    var csv = rows.map(function (row) {
+      return row.map(function (cell) {
+        var t = String(cell == null ? '' : cell);
+        if (/[",\n]/.test(t)) t = '"' + t.replace(/"/g, '""') + '"';
+        return t;
+      }).join(',');
+    }).join('\n');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    var stamp = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = 'idea-generator-submissions-' + stamp + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  });
+
+  // ---------- Hook ideas load into the main loadStats flow ----------
+  var origLoadStats = loadStats;
+  loadStats = async function (pw) {
+    var ok = await origLoadStats(pw);
+    if (ok) {
+      // fire-and-forget — don't block the main dashboard render
+      loadIdeas(pw);
+    }
+    return ok;
+  };
 
   // ---------- Boot ----------
   (function boot() {

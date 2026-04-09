@@ -1,9 +1,16 @@
 // Vercel serverless function — generates 3 product ideas + marketing angles
 // using the Vercel AI Gateway (Claude). Requires AI_GATEWAY_API_KEY env var
 // in Vercel project settings (or run on Vercel where OIDC is automatic).
+//
+// Also persists every submission (problem + generated ideas) to Upstash Redis
+// so the admin dashboard at /admin can review what people are asking for.
+// If Upstash isn't configured yet (env vars missing), the handler logs the
+// payload to stdout and continues — no failures, no downtime.
 
 import { generateObject } from "ai";
 import { z } from "zod";
+import crypto from "node:crypto";
+import { Redis } from "@upstash/redis";
 
 const ideasSchema = z.object({
   ideas: z
@@ -65,6 +72,60 @@ Be specific, warm, and energizing. Avoid generic SaaS clichés.`;
 // Vercel AI Gateway dashboard to whichever model you've enabled.
 const MODEL_ID = process.env.AI_GATEWAY_MODEL || "anthropic/claude-sonnet-4";
 
+// Upstash Redis keys for storing idea-generator submissions.
+const KEY_LIST = "ideas:submissions";      // list of JSON records, newest first
+const KEY_COUNT = "ideas:count";            // total submissions ever
+const MAX_STORED = 1000;                    // keep last N submissions (trim after each push)
+
+/**
+ * Lazily create an Upstash Redis client from env vars. Returns null if the
+ * integration isn't configured yet — keeps the idea generator working even
+ * before the user has connected Upstash in the Vercel Marketplace.
+ */
+function getRedis() {
+  const url =
+    process.env.KV_REST_API_URL || process.env.UPSTASH_REDIS_REST_URL;
+  const token =
+    process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (!url || !token) return null;
+  try {
+    return new Redis({ url, token });
+  } catch (err) {
+    console.error("ideas: Redis init failed", err);
+    return null;
+  }
+}
+
+/**
+ * Persist one submission. Best-effort: never throws, never blocks the user.
+ */
+async function persistSubmission(record) {
+  // Always log — this is our safety net if Redis isn't wired up yet, and it's
+  // still useful for auditing via Vercel Runtime Logs.
+  console.log(
+    JSON.stringify({
+      event: "idea_generated",
+      id: record.id,
+      ts: record.ts,
+      problem_length: (record.problem || "").length,
+      idea_names: (record.ideas || []).map((i) => i.name),
+    })
+  );
+
+  const redis = getRedis();
+  if (!redis) return { stored: false, reason: "redis-not-configured" };
+
+  try {
+    await redis.lpush(KEY_LIST, JSON.stringify(record));
+    await redis.ltrim(KEY_LIST, 0, MAX_STORED - 1);
+    await redis.incr(KEY_COUNT);
+    return { stored: true };
+  } catch (err) {
+    console.error("ideas: Redis write failed", err);
+    return { stored: false, reason: "redis-write-failed" };
+  }
+}
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -106,6 +167,18 @@ export default async function handler(req, res) {
       maxOutputTokens: 2048,
       temperature: 0.8,
     });
+
+    // Persist the submission so the admin dashboard can review what people
+    // are typing in. Best-effort — never blocks the response to the user.
+    const record = {
+      id: crypto.randomUUID(),
+      ts: new Date().toISOString(),
+      problem,
+      ideas: object.ideas,
+    };
+    persistSubmission(record).catch((err) =>
+      console.error("ideas: persistSubmission threw", err)
+    );
 
     return res.status(200).json({ ideas: object.ideas });
   } catch (err) {

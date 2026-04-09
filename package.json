@@ -5,6 +5,7 @@
   "type": "module",
   "description": "it was very good. — the home of The Genesis Challenge.",
   "dependencies": {
+    "@upstash/redis": "^1.37.0",
     "ai": "^5.0.0",
     "zod": "^3.23.8"
   }
