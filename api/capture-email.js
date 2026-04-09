@@ -2,16 +2,36 @@
 // on the site (waitlist + idea-generator unlock gate) and pushes them to
 // Mailchimp.
 //
-// Required Vercel env vars:
-//   MAILCHIMP_API_KEY   — your Mailchimp API key (e.g. abcdef...-us16)
-//   MAILCHIMP_LIST_ID   — the audience (list) ID to subscribe to
-//   MAILCHIMP_DC        — optional override for the data center; auto-detected
-//                         from the API key suffix if omitted
+// Behaviour: "add or update and always tag".
+//   1. PUT /lists/{id}/members/{md5(email)} with status_if_new="subscribed"
+//      — creates the member if new, no-op for existing subscribers (we
+//      deliberately don't change status, so already-unsubscribed people
+//      stay unsubscribed).
+//   2. POST /lists/{id}/members/{md5(email)}/tags to apply the source tag
+//      (e.g. "waitlist", "idea-generator"). This fires whether the contact
+//      was new or pre-existing, so previously-captured leads still get
+//      correctly tagged when they re-engage from itwasverygood.com.
 //
-// If MAILCHIMP_API_KEY is not set the function still validates and logs the
-// email so the page works locally / in preview without secrets.
+// Required Vercel env vars:
+//   MAILCHIMP_API_KEY   — Mailchimp API key (e.g. abcdef...-us16)
+//   MAILCHIMP_LIST_ID   — audience (list) ID
+//   MAILCHIMP_DC        — optional override; auto-detected from API key suffix
+//
+// If MAILCHIMP_API_KEY / MAILCHIMP_LIST_ID are not set the function still
+// validates and logs the email so the page works locally / in preview
+// without secrets.
+
+import crypto from "node:crypto";
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function subscriberHash(email) {
+  return crypto.createHash("md5").update(email.trim().toLowerCase()).digest("hex");
+}
+
+function mailchimpAuth(apiKey) {
+  return "Basic " + Buffer.from("anystring:" + apiKey).toString("base64");
+}
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
@@ -71,48 +91,75 @@ export default async function handler(req, res) {
       .json({ error: "Mailchimp not configured correctly." });
   }
 
-  const url = `https://${dc}.api.mailchimp.com/3.0/lists/${listId}/members`;
-  const auth = "Basic " + Buffer.from("anystring:" + apiKey).toString("base64");
+  const auth = mailchimpAuth(apiKey);
+  const hash = subscriberHash(email);
+  const base = `https://${dc}.api.mailchimp.com/3.0/lists/${listId}/members/${hash}`;
 
   try {
-    const mcRes = await fetch(url, {
-      method: "POST",
+    // 1. Upsert the member — status_if_new only sets "subscribed" for NEW
+    //    contacts, so anyone who previously unsubscribed stays unsubscribed
+    //    (compliance-friendly).
+    const upsertRes = await fetch(base, {
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         Authorization: auth,
       },
       body: JSON.stringify({
         email_address: email,
-        status: "subscribed",
-        tags: [source],
+        status_if_new: "subscribed",
       }),
     });
 
-    if (mcRes.ok) {
-      return res.status(200).json({ ok: true, mailchimp: "subscribed" });
+    let upsertData = {};
+    try {
+      upsertData = await upsertRes.json();
+    } catch {}
+
+    if (!upsertRes.ok) {
+      console.error(
+        JSON.stringify({
+          event: "mailchimp_upsert_error",
+          status: upsertRes.status,
+          title: upsertData.title,
+          detail: upsertData.detail,
+        })
+      );
+      return res
+        .status(502)
+        .json({ error: "Could not save your email. Please try again." });
     }
 
-    const data = await mcRes.json().catch(() => ({}));
-    // Treat "already a list member" as a soft success — they're already in.
-    if (
-      mcRes.status === 400 &&
-      typeof data.title === "string" &&
-      data.title.toLowerCase().includes("member exists")
-    ) {
-      return res.status(200).json({ ok: true, mailchimp: "already_member" });
+    // 2. Apply the source tag. Works for both brand-new and pre-existing
+    //    contacts — Mailchimp's /members/{hash}/tags endpoint is idempotent.
+    const tagRes = await fetch(`${base}/tags`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: auth,
+      },
+      body: JSON.stringify({
+        tags: [{ name: source, status: "active" }],
+      }),
+    });
+
+    if (!tagRes.ok && tagRes.status !== 204) {
+      // Tag failure is non-fatal — the contact is already upserted, so we
+      // log and still report success to the client.
+      const tagData = await tagRes.json().catch(() => ({}));
+      console.error(
+        JSON.stringify({
+          event: "mailchimp_tag_error",
+          status: tagRes.status,
+          title: tagData.title,
+          detail: tagData.detail,
+        })
+      );
     }
 
-    console.error(
-      JSON.stringify({
-        event: "mailchimp_error",
-        status: mcRes.status,
-        title: data.title,
-        detail: data.detail,
-      })
-    );
-    return res
-      .status(502)
-      .json({ error: "Could not save your email. Please try again." });
+    const state =
+      upsertData.status === "subscribed" ? "subscribed" : upsertData.status || "upserted";
+    return res.status(200).json({ ok: true, mailchimp: state });
   } catch (err) {
     console.error("MAILCHIMP request failed:", err);
     return res
