@@ -25,7 +25,7 @@ if (!DEMO_MODE) {
 // ---------- Public API ----------
 export async function signInWithGoogle() {
   if (DEMO_MODE) {
-    setDemoUser({ email: 'demo@vibecodeforjesus.com', name: 'Demo Student', provider: 'google' });
+    setDemoUser({ email: 'demo@itwasverygood.com', name: 'Demo Student', provider: 'google' });
     window.location.href = 'course.html';
     return;
   }

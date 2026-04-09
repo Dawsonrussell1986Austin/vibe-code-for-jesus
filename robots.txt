@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+# Don't waste crawl budget on the gated app surface
+Disallow: /course.html
+Disallow: /login.html
+
+Sitemap: https://itwasverygood.com/sitemap.xml
