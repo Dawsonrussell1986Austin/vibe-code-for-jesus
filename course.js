@@ -374,9 +374,9 @@ function viewModule(slug) {
         <div class="video-placeholder">
           <div class="video-placeholder-eyebrow">
             <span class="video-placeholder-pulse"></span>
-            Doors open Tuesday, April 14
+            Doors open Friday, May 1
           </div>
-          <h3 class="video-placeholder-title">Module videos drop Tuesday, April 14.</h3>
+          <h3 class="video-placeholder-title">Module videos drop Friday, May 1.</h3>
           <p class="video-placeholder-sub">We&rsquo;re putting the finishing touches on every lesson so you can ship something real on day one. You&rsquo;re on the waitlist &mdash; we&rsquo;ll email you the moment they&rsquo;re live.</p>
           <a href="#dashboard" class="btn btn-dark">Back to dashboard</a>
         </div>
